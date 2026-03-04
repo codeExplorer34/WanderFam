@@ -1,0 +1,155 @@
+.wrapper {
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+.section {
+    margin-bottom: 60px;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sectionTitle::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(180deg, var(--sky), var(--iris));
+    border-radius: 4px;
+}
+
+/* Colors */
+.colorGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.colorCard {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.colorSwatch {
+    height: 60px;
+    border-radius: var(--radius-sm);
+}
+
+.colorName {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--text-heading);
+}
+
+.colorToken {
+    font-size: 11px;
+    color: var(--sky);
+    font-family: monospace;
+}
+
+.colorRole {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Typography */
+.typoCard {
+    padding: 0;
+    overflow: hidden;
+}
+
+.typoRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px 28px;
+}
+
+.typoMeta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-heading);
+}
+
+.typoSpec {
+    color: var(--iris);
+}
+
+.typoSample {
+    color: var(--text-heading);
+}
+
+/* Component Card */
+.componentCard {
+    padding: 0;
+    overflow: hidden;
+}
+
+.componentRow {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 28px;
+    flex-wrap: wrap;
+}
+
+.componentLabel {
+    width: 80px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--font-heading);
+    flex-shrink: 0;
+}
+
+.componentSamples {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Chips */
+.chipRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px 28px;
+}
+
+/* Cards row */
+.cardRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.sampleCard {
+    padding: 24px;
+}
+
+@media (max-width: 900px) {
+    .colorGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cardRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .colorGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

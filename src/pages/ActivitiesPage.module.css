@@ -1,0 +1,479 @@
+.wrapper {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    transition: all 0.5s ease;
+}
+
+.kidsView {
+    background: radial-gradient(circle at top, rgba(167, 139, 250, 0.25) 0%, transparent 60%);
+}
+
+/* Header */
+.header {
+    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.header h1 span {
+    color: var(--sky);
+}
+
+/* View Toggle Tabs */
+.viewToggle {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px;
+    gap: 4px;
+    align-self: flex-start;
+}
+
+.toggleTab {
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+}
+
+.toggleTab:hover {
+    color: var(--text-heading);
+}
+
+.toggleActive {
+    background: var(--blue-primary);
+    color: #000;
+    box-shadow: 0 2px 12px rgba(56, 189, 248, 0.25);
+}
+
+/* Cards Grid — 2 column */
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+/* Default grid behavior */
+.cardsGrid>* {
+    width: 100%;
+}
+
+.packCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.packCard:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.packActive {
+    border-color: var(--sky);
+    box-shadow: 0 0 24px rgba(125, 211, 252, 0.12);
+}
+
+/* Image header */
+.cardImage {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.cardImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.packCard:hover .cardImage img {
+    transform: scale(1.04);
+}
+
+.imageOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(4, 6, 11, 0.7));
+}
+
+.challengeBadge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(56, 189, 248, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(125, 211, 252, 0.3);
+    color: var(--sky);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.ageBadge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Card body */
+.cardBody {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.cardTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cardIconWrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(125, 211, 252, 0.08);
+    border: 1px solid rgba(125, 211, 252, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cardTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+    font-family: var(--font-heading);
+}
+
+.cardDuration {
+    font-size: 12px;
+    color: var(--sky);
+    font-weight: 600;
+}
+
+.cardDesc {
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.featuresRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.featureChip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-muted);
+}
+
+.startBtn {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+/* Active banner */
+.activeBanner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(7, 10, 18, 0.9);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-strong);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.pulseDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 12px var(--mint);
+    animation: pulse-soft 2s infinite;
+    flex-shrink: 0;
+}
+
+/* Kids view styling */
+.kidsView .toggleActive {
+    background: var(--iris);
+}
+
+.kidsView .packCard {
+    border-radius: 28px;
+}
+
+.kidsView .startBtn {
+    font-size: 1.1rem;
+    padding: 16px 32px;
+}
+
+@media (max-width: 768px) {
+    .cardsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .activeBanner {
+        padding: 16px 20px;
+    }
+}
+
+/* ═══════════════════════════════════════
+   CALM MODE — Card
+═══════════════════════════════════════ */
+
+/* Removed centering logic */
+
+.calmCard {
+    background: rgba(110, 231, 183, 0.04);
+    border-color: rgba(110, 231, 183, 0.2);
+    grid-column: 1 / -1;
+}
+
+.calmCard:hover {
+    border-color: rgba(110, 231, 183, 0.45);
+    box-shadow: 0 0 40px rgba(110, 231, 183, 0.08);
+}
+
+/* Animated header instead of image */
+.calmCardHeader {
+    position: relative;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: radial-gradient(ellipse at 50% 60%, rgba(110, 231, 183, 0.12) 0%, transparent 70%);
+    overflow: hidden;
+}
+
+.calmBadgePill {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(110, 231, 183, 0.15);
+    border: 1px solid rgba(110, 231, 183, 0.35);
+    color: var(--mint);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.calmPreviewRings {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.previewRing {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(110, 231, 183, 0.35);
+    background: rgba(110, 231, 183, 0.05);
+    animation: calmPulse 3s ease-in-out infinite;
+}
+
+.calmEmoji {
+    position: relative;
+    z-index: 2;
+    font-size: 26px;
+    line-height: 1;
+}
+
+.calmCardHeaderLabel {
+    font-size: 12px;
+    color: rgba(110, 231, 183, 0.7);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.calmIconWrap {
+    background: rgba(110, 231, 183, 0.08) !important;
+    border-color: rgba(110, 231, 183, 0.25) !important;
+}
+
+.calmTitle {
+    color: var(--mint) !important;
+}
+
+.calmDuration {
+    color: rgba(110, 231, 183, 0.65) !important;
+}
+
+.calmChip {
+    border-color: rgba(110, 231, 183, 0.2) !important;
+    color: rgba(110, 231, 183, 0.7) !important;
+}
+
+.calmBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    border: 1.5px solid rgba(110, 231, 183, 0.4);
+    background: rgba(110, 231, 183, 0.08);
+    color: var(--mint);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    width: fit-content;
+}
+
+.calmBtn:hover {
+    background: rgba(110, 231, 183, 0.16);
+    border-color: rgba(110, 231, 183, 0.65);
+    box-shadow: 0 0 20px rgba(110, 231, 183, 0.15);
+}
+
+@keyframes calmPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: scale(1.18);
+        opacity: 0.15;
+    }
+}
+
+/* ═══════════════════════════════════════
+   CALM MODE — Full-screen Overlay
+═══════════════════════════════════════ */
+
+.calmOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: radial-gradient(circle at 50% 40%, #06140e 0%, #000 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.calmClose {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.calmClose:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.calmBadge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--mint);
+    opacity: 0.8;
+}
+
+.breatheRings {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.breatheRing {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(110, 231, 183, 0.3);
+    background: rgba(110, 231, 183, 0.04);
+}
+
+.breatheCenter {
+    position: relative;
+    z-index: 2;
+    font-size: 40px;
+    line-height: 1;
+}
+
+.breatheLabel {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.breatheHint {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 0;
+}

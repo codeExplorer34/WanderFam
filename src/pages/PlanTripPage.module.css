@@ -1,0 +1,448 @@
+.wrapper {
+    padding-bottom: 120px;
+}
+
+/* Progress Banner */
+.progressBanner {
+    background: rgba(7, 10, 18, 0.6);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    margin-bottom: 8px;
+}
+
+.progressSteps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.progressStep {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    position: relative;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.progressStep:not(:last-child)::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin: 0 12px;
+}
+
+.stepActive {
+    color: var(--blue-soft);
+}
+
+.stepDot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.stepActive .stepDot {
+    background: var(--blue-primary);
+    border-color: var(--blue-primary);
+    color: #000;
+}
+
+/* Two-column layout */
+.twoCol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.leftCol {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.rightCol {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    top: 24px;
+}
+
+.wrapper {
+    padding-top: 80px;
+    padding-bottom: 120px;
+}
+
+.header {
+    margin-bottom: 40px;
+}
+
+.funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.funnelSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stepNum {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(125, 211, 252, 0.08);
+    border: 1px solid rgba(125, 211, 252, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue-soft);
+    flex-shrink: 0;
+}
+
+.sectionHeader h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin: 0;
+}
+
+.funnelContent {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.selectorGroup {
+    margin-bottom: 20px;
+}
+
+.selectorGroup label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.chipGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    color: var(--text-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.chip:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.chip.active {
+    background: var(--blue-primary);
+    color: #000;
+    border-color: var(--blue-primary);
+    font-weight: 600;
+}
+
+/* Holiday Cards */
+.holidayGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.holidayCard {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.holidayCard:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.holidayActive {
+    background: rgba(125, 211, 252, 0.05);
+    border-color: var(--blue-soft);
+    box-shadow: 0 0 20px rgba(125, 211, 252, 0.08);
+}
+
+.holidayIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+}
+
+.holidayInfo h4 {
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.holidayInfo p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.checkMark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--blue-soft);
+    width: 24px;
+    height: 24px;
+    background: rgba(125, 211, 252, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Destination Cards Grid */
+.destinationGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.destCard {
+    position: relative;
+    height: 220px;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    transition: all var(--transition-smooth);
+}
+
+.destCard:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.destSelected {
+    border-color: var(--blue-soft);
+    box-shadow: 0 0 28px rgba(125, 211, 252, 0.18);
+}
+
+.destImgContainer {
+    position: absolute;
+    inset: 0;
+}
+
+.destImgContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.65;
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.destCard:hover .destImgContainer img {
+    opacity: 0.8;
+    transform: scale(1.03);
+}
+
+.destOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+}
+
+.destTags {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    z-index: 10;
+}
+
+.destTag {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    padding: 3px 8px;
+    border-radius: 100px;
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.destContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    z-index: 3;
+}
+
+.destContent h3 {
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 2px;
+    font-family: var(--font-heading);
+}
+
+.destWhy {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 6px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.destMeta {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.destMeta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.destCheck {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background: var(--blue-primary);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    box-shadow: 0 0 20px var(--blue-primary);
+}
+
+/* CTA Block */
+.ctaBlock {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.selectionSummary {
+    flex: 1;
+}
+
+.summaryLabel {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.summaryValue {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.ctaHint {
+    font-size: 14px;
+    color: var(--text-muted);
+    flex: 1;
+}
+
+@media (max-width: 1024px) {
+    .twoCol {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .rightCol {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .holidayGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .destinationGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .ctaBlock {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

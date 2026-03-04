@@ -1,0 +1,498 @@
+.wrapper {
+    padding-top: 88px;
+    padding-bottom: 120px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+}
+
+.header h1 span {
+    color: var(--blue-soft);
+}
+
+.flightBadge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue-soft);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Timeline Column */
+.timelineCard {
+    padding: 32px;
+    min-height: 600px;
+    background: var(--glass-bg);
+    border: var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+}
+
+.timelineHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.liveIndicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--mint);
+}
+
+.pulseDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 10px var(--mint);
+    animation: pulse-soft 2s infinite;
+}
+
+.timelineRows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.timelineRow {
+    display: flex;
+    gap: 24px;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.timelineRow:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 107px;
+    top: 24px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+}
+
+.rowMetadata {
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.rowTime {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.rowStatus {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    z-index: 2;
+}
+
+.rowStatus.done {
+    background: var(--mint);
+    box-shadow: 0 0 10px var(--mint);
+}
+
+.rowStatus.now {
+    background: var(--blue-primary);
+    box-shadow: 0 0 15px var(--blue-primary);
+    transform: scale(1.5);
+}
+
+.rowContent {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.rowNow .rowContent {
+    background: rgba(56, 189, 248, 0.05);
+    border-color: rgba(56, 189, 248, 0.2);
+}
+
+.rowNow .rowTime {
+    color: var(--sky);
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+.rowIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue-soft);
+}
+
+.rowText h4 {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.rowText p {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.nowBadge {
+    margin-left: auto;
+    background: var(--blue-primary);
+    color: #000;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+/* Right Status Column */
+.statusColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.familyWidget {
+    padding: 24px;
+}
+
+.memberMoods {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.memberCard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.memberMeta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.memberAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.memberMeta strong {
+    font-size: 14px;
+    color: #fff;
+}
+
+.memberMeta span {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.moodBar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.moodFill {
+    height: 100%;
+    border-radius: 100px;
+}
+
+.badgesWidget {
+    padding: 24px;
+}
+
+.widgetHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.badgeCount {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--iris);
+    text-transform: uppercase;
+}
+
+.pulseDotSmall {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--iris);
+    box-shadow: 0 0 8px var(--iris);
+    animation: pulse-soft 2s infinite;
+}
+
+.badgeGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.badgeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.badgeIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.badgeName {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+.badgeLocked .badgeName {
+    opacity: 0.5;
+}
+
+.badgeCard:hover .badgeIcon {
+    transform: translateY(-4px) scale(1.1);
+}
+
+.nextMoveCard {
+    padding: 24px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), transparent);
+}
+
+.nextMoveBadge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--blue-soft);
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.nextMoveCard p {
+    font-size: 13px;
+    color: var(--text-body);
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+.quickGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.qaCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.qaCard:hover {
+    background: var(--qa-bg, rgba(255, 255, 255, 0.05));
+    border-color: var(--qa-color, rgba(255, 255, 255, 0.2));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.qaIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.qaText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.qaLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.qaSub {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Phase Switcher */
+.phaseSwitcher {
+    display: flex;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+    gap: 4px;
+}
+
+.phaseBtn {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.phaseBtnActive {
+    background: #ffffff;
+    color: #000000;
+}
+
+.demoControlsPill {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.demoPillLabel {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--sky);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding-right: 12px;
+}
+
+.demoControlsPill button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.demoControlsPill button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sentimentAlert {
+    background: rgba(244, 63, 94, 0.12);
+    border: 1px solid rgba(244, 63, 94, 0.4);
+    padding: 16px 20px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 0 40px rgba(244, 63, 94, 0.15);
+}
+
+.sentimentAlert svg {
+    color: var(--urgent);
+    filter: drop-shadow(0 0 8px var(--urgent));
+}
+
+@media (max-width: 1000px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

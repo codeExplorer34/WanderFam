@@ -1,0 +1,94 @@
+.progressWrapper {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 180px;
+    width: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.track {
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--blue-soft);
+    box-shadow: 0 0 15px var(--blue-soft);
+}
+
+.stages {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stageDot {
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.stageItem {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    width: 20px;
+    height: 20px;
+}
+
+.stageLabel {
+    position: absolute;
+    right: 32px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+}
+
+.stageItem:hover .stageLabel {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--sky);
+}
+
+.stageItem:hover .stageDot {
+    background: var(--sky);
+    transform: scale(1.5);
+    box-shadow: 0 0 10px var(--sky);
+}
+
+@media (max-width: 768px) {
+    .progressWrapper {
+        display: none;
+    }
+}

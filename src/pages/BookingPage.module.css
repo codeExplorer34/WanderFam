@@ -1,0 +1,1326 @@
+/* ================================================================
+   BookingPage.module.css  –  WanderFam Flight Booking Flow
+   3-step: Passengers → Flight Details → Trip Summary
+   Design: Dark cinematic, glassmorphism, boarding-pass aesthetic
+   ================================================================ */
+
+/* ── Page shell ─────────────────────────────────────────────── */
+.bookingPage {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 30%, #0d1a2e 0%, #050816 60%, #0b1220 100%);
+    color: var(--text-main, #e5e7eb);
+    font-family: var(--font-body);
+    padding-top: 80px;
+    /* global nav offset */
+}
+
+/* ── Stepper ────────────────────────────────────────────────── */
+.stepperWrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    cursor: pointer;
+}
+
+.stepBubble {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(148, 163, 184, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+
+.stepBubbleActive {
+    border-color: var(--sky);
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--sky);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+}
+
+.stepBubbleDone {
+    border-color: var(--mint);
+    background: rgba(52, 211, 153, 0.12);
+    color: var(--mint);
+}
+
+.stepLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.35);
+    white-space: nowrap;
+    transition: color 0.25s;
+}
+
+.stepLabelActive {
+    color: #fff;
+}
+
+.stepLabelDone {
+    color: var(--mint);
+}
+
+.stepConnector {
+    flex: 1;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.15);
+    margin: 0 12px;
+}
+
+.stepConnectorDone {
+    background: rgba(52, 211, 153, 0.4);
+}
+
+/* ── Content shell ──────────────────────────────────────────── */
+.shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* ── Shared card ────────────────────────────────────────────── */
+.card {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+.cardHeader {
+    padding: 1.75rem 2rem 1.25rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.cardTitle {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.cardSub {
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ── Section fade animation ─────────────────────────────────── */
+.stepPanel {
+    animation: stepFade 0.35s ease both;
+}
+
+@keyframes stepFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTION 1 – PASSENGERS
+═══════════════════════════════════════════════════ */
+.passengerList {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.passengerCard {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.07);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.passengerCard:last-child {
+    border-bottom: none;
+}
+
+.passengerCard:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Summary row */
+.paxSummary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 1.25rem 2rem;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+}
+
+.paxInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.paxName {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.paxPills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid;
+}
+
+.pillBlue {
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(56, 189, 248, 0.08);
+    color: #7dd3fc;
+}
+
+.pillGreen {
+    border-color: rgba(52, 211, 153, 0.3);
+    background: rgba(52, 211, 153, 0.08);
+    color: #6ee7b7;
+}
+
+.pillGray {
+    border-color: rgba(148, 163, 184, 0.2);
+    background: rgba(148, 163, 184, 0.06);
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.pillPurple {
+    border-color: rgba(168, 85, 247, 0.3);
+    background: rgba(168, 85, 247, 0.08);
+    color: #c084fc;
+}
+
+.youBadge {
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--sky);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 1px 7px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+}
+
+.chevron {
+    color: rgba(255, 255, 255, 0.3);
+    transition: transform 0.25s ease, color 0.2s;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+    color: var(--sky);
+}
+
+/* Expanded form */
+.paxForm {
+    padding: 0 2rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px 14px;
+    animation: formExpand 0.25s ease both;
+}
+
+@keyframes formExpand {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fieldWide {
+    grid-column: span 2;
+}
+
+.fieldFull {
+    grid-column: 1 / -1;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fieldLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.fieldInput,
+.fieldSelect {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+}
+
+.fieldInput:focus,
+.fieldSelect:focus {
+    border-color: var(--sky);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+.fieldInput::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.dobRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+}
+
+/* CTA row at bottom of the card */
+.cardActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.08);
+    gap: 12px;
+}
+
+.btnGhost { display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 100px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); color: #ffffff; font-size: 13.5px; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: all 0.2s; backdrop-filter: blur(8px); } .btnGhost:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-1px); }
+
+
+
+.btnPrimary { display: inline-flex; align-items: center; gap: 8px; padding: 11px 28px; border-radius: 100px; border: none; background: #ffffff; color: #000000; font-size: 14px; font-weight: 700; font-family: var(--font-body); cursor: pointer; transition: all 0.22s; } .btnPrimary:hover { background: #f8fafc; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+
+
+
+/* ═══════════════════════════════════════════════════
+   SECTION 2 – BOARDING PASS
+═══════════════════════════════════════════════════ */
+.boardingPass {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.bpTop {
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.06) 0%, transparent 60%);
+}
+
+.bpAirport {
+    display: flex;
+    flex-direction: column;
+}
+
+.bpAirport.right {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.bpCode {
+    font-family: var(--font-heading);
+    font-size: clamp(42px, 6vw, 64px);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.bpCity {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+}
+
+.bpMiddle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.bpArrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--sky);
+}
+
+.arrowLine {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sky), transparent);
+}
+
+.bpDuration {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sky);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+}
+
+.bpTimes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2.5rem 1.5rem;
+    gap: 1rem;
+}
+
+.bpTime {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bpTime.right {
+    align-items: flex-end;
+}
+
+.bpTimeLabel {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bpTimeValue {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.bpTimeDate {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* Perforation divider */
+.bpPerforation {
+    position: relative;
+    height: 1px;
+    margin: 0;
+    background: rgba(148, 163, 184, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.bpPerforation::before,
+.bpPerforation::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(ellipse at 20% 30%, #0d1a2e 0%, #050816 60%, #0b1220 100%);
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bpPerforation::before {
+    left: -10px;
+}
+
+.bpPerforation::after {
+    right: -10px;
+}
+
+/* Bottom of boarding pass */
+.bpBottom {
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.bpMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bpMetaRow {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.bpMetaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bpMetaLabel {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bpMetaValue {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Barcode area */
+.bpBarcode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.barcodeBars {
+    display: flex;
+    gap: 2px;
+    height: 48px;
+    align-items: center;
+}
+
+.barcodeBars span {
+    display: block;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 1px;
+    width: var(--w, 2px);
+    height: var(--h, 100%);
+}
+
+.barcodeNum {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.15em;
+}
+
+/* ── Flight Timeline ────────────────────────────────────────── */
+.flightTimeline {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.timelineTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+}
+
+.timelineTrack {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+}
+
+.timelineMilestone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.timelineMilestone:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    right: -50%;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.15);
+}
+
+.timelineMilestone.done::after {
+    background: rgba(52, 211, 153, 0.3);
+}
+
+.timelineDot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    background: rgba(15, 23, 42, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.timelineMilestone.done .timelineDot {
+    border-color: var(--mint);
+    color: var(--mint);
+    background: rgba(52, 211, 153, 0.08);
+}
+
+.timelineMilestone.active .timelineDot {
+    border-color: var(--sky);
+    color: var(--sky);
+    background: rgba(56, 189, 248, 0.1);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+.tlLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.tlTime {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.25);
+    text-align: center;
+}
+
+.timelineMilestone.active .tlLabel {
+    color: var(--sky);
+}
+
+.timelineMilestone.done .tlLabel {
+    color: var(--mint);
+}
+
+/* ── Info group cards grid ──────────────────────────────────── */
+.infoGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.infoCard {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 18px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.infoCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.infoCardIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.infoCardTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.infoCardLines {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.infoCardLine {
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.infoCardLine::before {
+    content: '·';
+    color: var(--sky);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTION 3 – TRIP SUMMARY
+═══════════════════════════════════════════════════ */
+.tripHeroCard {
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #0d2740 0%, #1a1040 100%);
+}
+
+.tripHeroBg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=900&q=70&fit=crop');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.35;
+}
+
+.tripHeroOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5, 8, 22, 0.9) 0%, transparent 60%);
+}
+
+.tripHeroContent {
+    position: relative;
+    padding: 2rem;
+    z-index: 1;
+}
+
+.tripHeroRoute {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+}
+
+.tripHeroMeta {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tripHeroMeta span+span::before {
+    content: '·';
+    margin-right: 10px;
+    opacity: 0.5;
+}
+
+/* Mini boarding pass segments */
+.segmentsList {
+    margin-bottom: 1.5rem;
+}
+
+.segmentCard {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.segmentCard:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.segType {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sky);
+    width: 70px;
+    flex-shrink: 0;
+}
+
+.segRoute {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.segCode {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+}
+
+.segArrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+}
+
+.segMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.segTime {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.segDur {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Passengers summary */
+.passengersSummary {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.paxSummaryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.paxSummaryTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.editLink {
+    font-size: 12px;
+    color: var(--sky);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 0;
+}
+
+.paxSummaryRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.9rem 1.5rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+}
+
+.paxSummaryRow:last-child {
+    border-bottom: none;
+}
+
+.paxSummaryInfo {
+    flex: 1;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.paxSummaryMeta {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 2px;
+}
+
+/* Price breakdown card */
+.priceCard {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.priceTotal {
+    padding: 1.75rem 1.75rem 1.25rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.priceTotalLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+
+.priceTotalAmount {
+    font-family: var(--font-heading);
+    font-size: 44px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.priceTotalSub {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 4px;
+}
+
+.priceRows {
+    padding: 1rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    font-size: 13.5px;
+}
+
+.priceRow:last-child {
+    border-bottom: none;
+}
+
+.priceRowLabel {
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 500;
+}
+
+.priceRowValue {
+    color: #fff;
+    font-weight: 700;
+}
+
+.priceActions {
+    padding: 1rem 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btnPayCta { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; height: 52px; border-radius: 100px; border: none; background: #ffffff; color: #000; font-size: 16px; font-weight: 800; font-family: var(--font-body); cursor: pointer; transition: all 0.25s; letter-spacing: -0.01em; } .btnPayCta:hover { background: #f8fafc; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+
+.btnPayCta:hover {
+    background: #7dd3fc;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(56, 189, 248, 0.4);
+}
+
+.payReassurance {
+    text-align: center;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* ═══════════════════════════════════════════════════
+   TRIP SNAPSHOT CARD (right column, persistent)
+═══════════════════════════════════════════════════ */
+.snapshot {
+    position: sticky;
+    top: 100px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+
+.snapshotHeader {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(168, 85, 247, 0.08) 100%);
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.snapshotRoute {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.snapshotCodes {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.snapshotArrow {
+    color: var(--sky);
+    font-size: 18px;
+}
+
+.snapshotDates {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.snapshotBadge {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 10px;
+    padding: 6px 10px;
+    text-align: center;
+}
+
+.snapshotBadgeDays {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--sky);
+    line-height: 1;
+}
+
+.snapshotBadgeLabel {
+    font-size: 10px;
+    color: rgba(56, 189, 248, 0.65);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.snapshotBody {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.snapshotRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.snapshotRowIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.snapshotRowInfo {
+    flex: 1;
+}
+
+.snapshotRowLabel {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 3px;
+}
+
+.snapshotRowValue {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.snapshotRowSub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 2px;
+}
+
+/* Mini timeline in snapshot */
+.snapshotTimeline {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.07);
+}
+
+.snapshotTimelineLabel {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+
+.snapshotTimelineTrack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.snapshotTlItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 16px;
+}
+
+.snapshotTlItem:last-child {
+    padding-bottom: 0;
+}
+
+.snapshotTlItem:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    bottom: 0;
+    width: 1px;
+    background: rgba(148, 163, 184, 0.1);
+}
+
+.snapshotTlDot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    background: rgba(15, 23, 42, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.snapshotTlDot.active {
+    border-color: var(--sky);
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--sky);
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+}
+
+.snapshotTlText {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.3;
+}
+
+.snapshotTlText.active {
+    color: #fff;
+}
+
+.snapshotTlSub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 2px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .shell {
+        grid-template-columns: 1fr;
+    }
+
+    .snapshot {
+        position: static;
+        order: -1;
+        /* snapshot above content on tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    .stepperWrap {
+        padding: 1.25rem 1rem 0;
+    }
+
+    .shell {
+        padding: 1.25rem 1rem 3rem;
+        gap: 1.25rem;
+    }
+
+    .paxForm {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .fieldWide {
+        grid-column: span 2;
+    }
+
+    .bpTop {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .bpCode {
+        font-size: 36px;
+    }
+
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .stepLabel {
+        display: none;
+    }
+
+    .cardHeader {
+        padding: 1.25rem 1.25rem 1rem;
+    }
+
+    .cardActions {
+        padding: 1rem 1.25rem;
+    }
+
+    .paxSummary {
+        padding: 1rem 1.25rem;
+    }
+
+    .paxForm {
+        padding: 0 1.25rem 1.25rem;
+    }
+}
+/* -- Success State ------------------------------------------ */
+.successWrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.successCard {
+    max-width: 500px;
+    width: 100%;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 32px;
+}
+
+.successIcon {
+    font-size: 64px;
+    margin-bottom: 1.5rem;
+}
+
+.successActions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 2.5rem;
+}
+
+.successActions button {
+    width: 100%;
+    justify-content: center;
+}

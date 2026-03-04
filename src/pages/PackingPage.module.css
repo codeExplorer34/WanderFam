@@ -1,0 +1,294 @@
+.wrapper {
+    padding-top: 88px;
+    padding-bottom: 120px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+}
+
+.header p {
+    color: var(--blue-soft);
+}
+
+.tabLayout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Sidebar Tabs */
+.tabList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tabItem {
+    padding: 14px 20px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-left: 3px solid transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tabItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+}
+
+.tabActive {
+    background: rgba(56, 189, 248, 0.08);
+    border-color: rgba(56, 189, 248, 0.15);
+    border-left-color: var(--blue-soft);
+    color: var(--blue-soft);
+}
+
+.tabPill {
+    font-size: 10px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.tabActive .tabPill {
+    background: var(--blue-soft);
+    color: #000;
+}
+
+/* Checklist Content */
+.checklistColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--sky), var(--iris));
+    transition: width var(--transition-smooth);
+}
+
+.aiSuggestionCard {
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(129, 140, 248, 0.08), transparent);
+    border: 1px solid rgba(129, 140, 248, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.aiSuggestionCard::before {
+    content: 'AI';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 60px;
+    font-weight: 900;
+    opacity: 0.03;
+    color: var(--iris);
+}
+
+.aiBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(129, 140, 248, 0.15);
+    color: var(--iris);
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.aiTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.aiDesc {
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.progressCard {
+    padding: 32px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), transparent);
+}
+
+.progressInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.progressLabel {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.progressPct {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--blue-soft);
+}
+
+/* Category Sections */
+.catSection {
+    margin-bottom: 40px;
+}
+
+.catHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.catHeader h4 {
+    font-size: 18px;
+    color: #fff;
+}
+
+.itemList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    width: 100%;
+    text-align: left;
+}
+
+.checkItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.checkItem:active {
+    transform: scale(0.99);
+}
+
+.checkItemDone {
+    border-color: rgba(52, 211, 153, 0.2);
+    background: rgba(52, 211, 153, 0.03);
+    animation: item-checked 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes item-checked {
+    0% {
+        background: rgba(52, 211, 153, 0.15);
+    }
+
+    100% {
+        background: rgba(52, 211, 153, 0.03);
+    }
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    border: 2px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.checkboxChecked {
+    background: var(--mint);
+    border-color: var(--mint);
+    color: #000;
+    transform: scale(1.15);
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+}
+
+.itemLabel {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    transition: color 0.2s, text-decoration 0.2s;
+}
+
+.checkItemDone .itemLabel {
+    color: var(--text-muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(52, 211, 153, 0.4);
+    opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+    .tabLayout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.addItemRow {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.addItemInput {
+    width: 100%;
+    padding: 18px 24px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+}
+
+.addItemInput::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.addItemInput:focus {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--blue-soft);
+    border-style: solid;
+    box-shadow: 0 0 20px rgba(125, 211, 252, 0.1);
+    transform: translateY(-2px);
+}

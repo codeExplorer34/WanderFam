@@ -1,0 +1,918 @@
+/* ═══════════════════════════════════════
+   HERO — Clean Minimal Image Hero
+═══════════════════════════════════════ */
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* The actual image */
+.heroBg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/hero-bg.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    z-index: 0;
+}
+
+/* Gradient overlay: dark on the left where text is, fades to transparent on right */
+.heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(4, 6, 14, 0.3) 0%, rgba(4, 6, 14, 0.85) 100%);
+    z-index: 1;
+}
+
+/* Inner content wrapper — sits at bottom-left */
+.heroInner {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Hero copy block */
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+}
+
+/* Small eyebrow label */
+.heroEyebrow {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--blue-soft);
+    margin-bottom: 0;
+    opacity: 1;
+}
+
+/* Main headline */
+.heroTitle {
+    font-size: clamp(48px, 8vw, 84px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+    margin: 0 auto;
+    color: #fff;
+    max-width: 1100px;
+    text-align: center;
+}
+
+.titleLine {
+    display: block;
+    width: 100%;
+}
+
+.wordWrapper {
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
+}
+
+.metallicText {
+    font-style: italic;
+    background: linear-gradient(135deg, #fff 0%, var(--blue-soft) 50%, #fff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: metallicFlow 8s linear infinite;
+    text-shadow: 0 0 20px rgba(125, 211, 252, 0.2);
+    display: inline-block;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 5;
+}
+
+@keyframes metallicFlow {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* Subtitle */
+.heroSub {
+    font-size: 21px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 700px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.ctaWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.ctaMicroCopy {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.progressTrail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 8px;
+}
+
+.trailStep {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.trailStepActive {
+    color: var(--sky);
+}
+
+.trailArrow {
+    color: rgba(255, 255, 255, 0.1);
+}
+
+/* CTA row */
+.heroCtas {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Stats strip */
+.heroStats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 16px 32px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 100px;
+    margin-top: 48px;
+    width: fit-content;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 32px;
+}
+
+.statItem:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statNum {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+.statLabel {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.statDivider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+/* ─── Brand Wall — Marquee scroll ─── */
+.brandWall {
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(4, 6, 11, 0.3);
+    overflow: hidden;
+}
+
+.brandWallLabel {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    opacity: 0.4;
+    color: #fff;
+    font-family: var(--font-body);
+}
+
+.marqueeTrack {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 28s linear infinite;
+    gap: 80px;
+    align-items: center;
+}
+
+.marqueeSet {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.marqueeItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.35;
+    transition: opacity 0.35s ease;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.marqueeItem:hover {
+    opacity: 0.85;
+}
+
+.marqueeIcon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.marqueeLabel {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Floating Hero Assets */
+.floatingAsset {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.4;
+    animation: float 6s ease-in-out infinite;
+    filter: blur(2px);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+.asset1 {
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.asset2 {
+    top: 60%;
+    left: 5%;
+    animation-delay: -2s;
+}
+
+.asset3 {
+    top: 20%;
+    right: 15%;
+    animation-delay: -4s;
+}
+
+.asset4 {
+    top: 70%;
+    right: 10%;
+    animation-delay: -1s;
+}
+
+/* Interactive Journey Timeline */
+.journeySection {
+    padding: var(--space-24) 0;
+    position: relative;
+    background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.05), transparent 40%);
+}
+
+.journeyLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: center;
+}
+
+.journeyVisual {
+    position: relative;
+    padding-left: var(--space-12);
+}
+
+.journeyTrack {
+    position: absolute;
+    left: 0;
+    top: 5%;
+    bottom: 5%;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.journeyProgress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: var(--blue-soft);
+    box-shadow: 0 0 12px var(--blue-soft);
+    transition: height 0.3s ease;
+}
+
+.journeyStep {
+    position: relative;
+    padding-bottom: var(--space-16);
+}
+
+.stepIndicator {
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--base-1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.stepActive .stepIndicator {
+    background: var(--blue-soft);
+    border-color: var(--blue-soft);
+    box-shadow: 0 0 16px var(--blue-soft);
+}
+
+.stepCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-left: var(--space-8);
+    opacity: 0.4;
+    transform: translateX(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepActive .stepCard {
+    opacity: 1;
+    transform: translateX(0);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.stepLabel {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue-soft);
+    margin-bottom: var(--space-2);
+}
+
+.stepTitle {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+}
+
+.stepDesc {
+    font-size: 14px;
+    color: var(--text-body);
+}
+
+.itemTimeCompact {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    width: 38px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.itemDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.itemLabelCompact {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-heading);
+    line-height: 1.3;
+}
+
+.widgetCard {
+    width: 300px;
+    padding: 28px;
+    border-radius: 24px;
+    background: rgba(5, 8, 18, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+        0 24px 64px rgba(0, 0, 0, 0.6),
+        0 0 0 0.5px rgba(255, 255, 255, 0.06) inset,
+        0 8px 24px rgba(56, 189, 248, 0.06);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    position: relative;
+    overflow: hidden;
+}
+
+.widgetHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.widgetLabel {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue-soft);
+    font-family: var(--font-heading);
+}
+
+.flightDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue-soft);
+    box-shadow: 0 0 12px var(--blue-soft);
+}
+
+.timelineList {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.timelineItem {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    min-height: 60px;
+}
+
+.itemTime {
+    width: 40px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding-top: 4px;
+    text-align: right;
+}
+
+.itemTrack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.trackLine {
+    width: 3px;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--border-strong);
+}
+
+.itemContent {
+    flex: 1;
+    padding-bottom: 24px;
+}
+
+.itemLabel {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+}
+
+.widgetFooter {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.carouselDots {
+    display: flex;
+    gap: 8px;
+}
+
+.widgetDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.dotActive {
+    background: var(--blue-soft);
+    width: 16px;
+    border-radius: 3px;
+}
+
+/* Features */
+.featuresSection {
+    background: transparent;
+}
+
+.featureCard {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.featureCard:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.featureCard h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.featureCard p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.featureIcon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featureLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    width: fit-content;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.featureLink:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.proofRow {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.proofStats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.proofStat {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0 16px;
+}
+
+.proofStat strong {
+    font-size: 28px;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.proofStat span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.02em;
+}
+
+.proofDivider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+/* Timeline Pill */
+.timelineSection {
+    padding: 64px 0 32px;
+    position: relative;
+    z-index: 20;
+}
+
+.timelinePill {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-lg);
+}
+
+.timelineStep {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    flex: 1;
+}
+
+.stepIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue-soft);
+}
+
+.stepDivider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    flex: 1;
+    margin: 0 16px;
+}
+
+/* Philosophy */
+.phiSection {
+    padding: 100px 0;
+}
+
+.phiCard {
+    text-align: center;
+    padding: 32px;
+}
+
+.phiIcon {
+    margin-bottom: 20px;
+}
+
+.phiCard h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.phiCard p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+}
+
+/* Features */
+.featuresSection {
+    background: transparent;
+}
+
+.featureCard {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.featureCard:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.featureIcon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featureLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    text-decoration: none;
+    margin-top: auto;
+}
+
+/* CTA Section */
+.ctaCard {
+    padding: 80px 48px;
+    text-align: center;
+    border-radius: var(--radius-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.ctaGlow {
+    position: absolute;
+    inset: -60px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(125, 211, 252, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.featureSubtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: -8px;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.childManagement {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modeItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-body);
+}
+
+.modeDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+}
+
+.kidsViewPreview {
+    margin-top: 24px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(110, 231, 183, 0.1) 0%, rgba(110, 231, 183, 0.02) 100%);
+    border: 1px dashed var(--mint);
+}
+
+/* Hero Timeline Widget — sits in the right grid column */
+.timelineWidget {
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: 20;
+    justify-self: end;
+}
+
+.kvBadge {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+}
+
+.kvTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--mint);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .phiSection {
+        padding: 64px 0;
+    }
+
+    .hero .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .heroContent {
+        max-width: 100%;
+    }
+
+    .heroCtas {
+        justify-content: center;
+    }
+
+    .subtext {
+        margin: 0 auto 36px;
+    }
+
+    .proofRow {
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .timelinePill {
+        flex-direction: column;
+        border-radius: 24px;
+        padding: 24px;
+        gap: 16px;
+    }
+
+    .timelineStep {
+        width: 100%;
+    }
+
+    .stepDivider {
+        display: none;
+    }
+
+    .phoneContainer {
+        margin: 0 auto;
+    }
+}
