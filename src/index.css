@@ -366,13 +366,11 @@ a {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
-  /* Increased for better breathing room */
+  padding: 0 clamp(20px, 5vw, 40px);
 }
 
 .section {
-  padding: 120px 0;
-  /* More generous vertical spacing */
+  padding: clamp(64px, 12vh, 120px) 0;
 }
 
 /* --- Scrollbar --- */

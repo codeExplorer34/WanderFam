@@ -248,13 +248,57 @@
     padding: 16px 32px;
 }
 
+/* ── Responsive Activities ────────────────────────────────────── */
 @media (max-width: 768px) {
+    .header {
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .viewToggle {
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .toggleTab {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
     .cardsGrid {
         grid-template-columns: 1fr;
     }
 
+    .cardBody {
+        padding: 20px;
+    }
+
     .activeBanner {
-        padding: 16px 20px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+        padding: 16px;
+    }
+
+    .startBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .calmEmoji {
+        font-size: 32px;
+    }
+
+    .breatheLabel {
+        font-size: 24px;
+    }
+
+    .breatheRings {
+        width: 180px;
+        height: 180px;
     }
 }
 

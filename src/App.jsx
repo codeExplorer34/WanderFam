@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { useState, createContext, useContext, lazy, Suspense } from 'react'
+import { useState, useEffect, createContext, useContext, lazy, Suspense } from 'react'
+import Lenis from 'lenis'
 import CustomCursor from './components/CustomCursor'
 import StaggeredMenu from './components/StaggeredMenu'
 import Background from './components/Background'
@@ -82,6 +83,16 @@ function ConditionalMenu({ items, socialItems }) {
 
 export default function App() {
     const [demoMode, setDemoMode] = useState(false)
+
+    useEffect(() => {
+        const lenis = new Lenis()
+        function raf(time) {
+            lenis.raf(time)
+            requestAnimationFrame(raf)
+        }
+        requestAnimationFrame(raf)
+        return () => lenis.destroy()
+    }, [])
 
     return (
         <PhaseProvider>

@@ -434,3 +434,60 @@
     justify-content: space-between;
     margin-top: 40px;
 }
+
+/* ── Responsive Setup ────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .wizardContainer {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .header h2 {
+        font-size: 1.8rem;
+    }
+
+    .childCard {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    .childFields {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .fieldRow,
+    .priorityGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .wizardActions {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+
+    .wizardActions button {
+        width: 100%;
+    }
+
+    .overviewCard {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .progressBar {
+        overflow-x: auto;
+        padding-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .progressSegment {
+        min-width: 80px;
+    }
+
+    .segmentLabel {
+        font-size: 8px;
+    }
+}

@@ -491,6 +491,83 @@
     filter: drop-shadow(0 0 8px var(--urgent));
 }
 
+/* ── Responsive Dashboard ────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .timelineCard {
+        padding: 20px;
+    }
+
+    .rowMetadata {
+        width: 80px;
+    }
+
+    .timelineRow:not(:last-child)::after {
+        left: 67px;
+    }
+
+    .rowContent {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .rowIcon {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    .badgeGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quickGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .rowMetadata {
+        display: none;
+    }
+
+    .timelineRow:not(:last-child)::after {
+        display: none;
+    }
+
+    .timelineRow {
+        padding-bottom: 16px;
+    }
+
+    .phaseSwitcher {
+        overflow-x: auto;
+        padding: 4px;
+        border-radius: 12px;
+    }
+
+    .phaseBtn {
+        min-width: 80px;
+    }
+}
+
 @media (max-width: 1000px) {
     .grid {
         grid-template-columns: 1fr;

@@ -1,0 +1,346 @@
+.section {
+    position: relative;
+    background: #000;
+    overflow: hidden;
+    /* GSAP will handle the scroll height via pinning */
+}
+
+.ambientBg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.noiseOverlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.15;
+    filter: contrast(120%) brightness(120%);
+    pointer-events: none;
+}
+
+.auroraGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    filter: blur(100px);
+    animation: aurora 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+@keyframes aurora {
+    0% {
+        transform: translate(-55%, -50%) scale(1);
+    }
+
+    100% {
+        transform: translate(-45%, -50%) scale(1.1);
+    }
+}
+
+.track {
+    display: flex;
+    height: 100vh;
+    will-change: transform;
+}
+
+.stepScene {
+    flex-shrink: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 10vw;
+    overflow: hidden;
+}
+
+.ghostNum {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(200px, 40vw, 600px);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.03);
+    line-height: 0.8;
+    pointer-events: none;
+    z-index: 0;
+    font-family: var(--font-heading);
+    letter-spacing: -0.05em;
+}
+
+.sceneContent {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1400px;
+    width: 100%;
+}
+
+.textContent {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.stepLabel {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    display: block;
+}
+
+.stepTitle {
+    font-size: clamp(40px, 6vw, 90px);
+    line-height: 1;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+.stepDesc {
+    font-size: 19px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 500px;
+    margin: 0;
+}
+
+.visualContainer {
+    position: relative;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visualBox {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 56px;
+    backdrop-filter: blur(40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.imageWrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.visualImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transform-origin: center;
+    transition: filter 0.5s ease;
+    filter: saturate(0.8) contrast(1.1);
+}
+
+.imageOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.visualIconOverlay {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Step Connector */
+.stepConnector {
+    position: absolute;
+    right: -140px;
+    top: 50%;
+    width: 200px;
+    height: 40px;
+    z-index: 10;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* Visuals Styles */
+.avatarGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.avatarCircle {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.syncIndicator {
+    position: absolute;
+    bottom: 40px;
+    height: 4px;
+    border-radius: 2px;
+    opacity: 0.4;
+    filter: blur(2px);
+}
+
+.mapGrid {
+    width: 340px;
+    height: 340px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radarRing {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px dashed;
+    opacity: 0.2;
+}
+
+.radarSweep {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+}
+
+.navMarker {
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 15px currentColor);
+}
+
+.sanctuaryVisual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iris {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+.floatingHeart {
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+}
+
+.floatingIcons {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-between;
+    pointer-events: none;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 1100px) {
+    .sceneContent {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 900px) {
+    .section {
+        height: auto;
+    }
+
+    .track {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .stepScene {
+        width: 100%;
+        height: auto;
+        padding: 100px 20px;
+    }
+
+    .sceneContent {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .textContent {
+        align-items: center;
+    }
+
+    .stepDesc {
+        margin: 0 auto;
+    }
+
+    .visualContainer {
+        height: 400px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .stepConnector {
+        display: none;
+    }
+
+    .ghostNum {
+        font-size: 150px;
+        top: 40px;
+        transform: translate(-50%, 0);
+    }
+}

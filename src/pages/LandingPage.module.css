@@ -341,105 +341,155 @@
     animation-delay: -1s;
 }
 
-/* Interactive Journey Timeline */
-.journeySection {
-    padding: var(--space-24) 0;
+/* ── Cinematic Story Section ────────────────────────────────── */
+.storySection {
+    padding: clamp(80px, 15vh, 160px) 0;
+    background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
     position: relative;
-    background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.05), transparent 40%);
+    overflow: hidden;
 }
 
-.journeyLayout {
+.storyHeader {
+    text-align: center;
+    margin-bottom: clamp(60px, 10vh, 100px);
+}
+
+.gradientText {
+    background: linear-gradient(135deg, var(--sky) 0%, var(--iris) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.storyGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-16);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.storyCard {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 32px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.storyCard:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-10px);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.journeyVisual {
-    position: relative;
-    padding-left: var(--space-12);
-}
-
-.journeyTrack {
-    position: absolute;
-    left: 0;
-    top: 5%;
-    bottom: 5%;
-    width: 2px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.journeyProgress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background: var(--blue-soft);
-    box-shadow: 0 0 12px var(--blue-soft);
-    transition: height 0.3s ease;
-}
-
-.journeyStep {
-    position: relative;
-    padding-bottom: var(--space-16);
-}
-
-.stepIndicator {
-    position: absolute;
-    left: -6px;
-    top: 0;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--base-1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    z-index: 2;
-    transition: all 0.4s ease;
-}
-
-.stepActive .stepIndicator {
-    background: var(--blue-soft);
-    border-color: var(--blue-soft);
-    box-shadow: 0 0 16px var(--blue-soft);
-}
-
-.stepCard {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    margin-left: var(--space-8);
-    opacity: 0.4;
-    transform: translateX(20px);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.stepActive .stepCard {
-    opacity: 1;
-    transform: translateX(0);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-.stepLabel {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--blue-soft);
-    margin-bottom: var(--space-2);
-}
-
-.stepTitle {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: var(--space-2);
-}
-
-.stepDesc {
+.stepNum {
+    font-family: var(--font-heading);
     font-size: 14px;
-    color: var(--text-body);
+    font-weight: 800;
+    letter-spacing: 0.1em;
 }
+
+.cardVisual {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.visualCard {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.visualIcon {
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.visualLines {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.visualPulse {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulseRing {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid;
+    border-radius: 50%;
+    animation: pulseOut 3s infinite linear;
+}
+
+@keyframes pulseOut {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+.cardBody h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.cardBody p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+/* ── Responsive Story ────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .storyGrid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
 
 .itemTimeCompact {
     font-size: 12px;

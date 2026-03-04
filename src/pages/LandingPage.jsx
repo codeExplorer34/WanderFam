@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Plane, Map, Gamepad2, ShieldCheck, ChevronRight, Star, Zap, Globe, Building, Castle, Wind, Shield, Navigation } from 'lucide-react'
+import { ArrowRight, Plane, Map, Gamepad2, ShieldCheck, ChevronRight, Star, Zap, Globe, Building, Castle, Wind, Shield, Navigation, Ship, Coffee, Heart, Layout, Sparkles } from 'lucide-react'
 import PageWrapper from '../components/PageWrapper'
 import ParallaxHero from '../components/ParallaxHero'
+import CinematicJourney from '../components/CinematicJourney'
 import { useDemoMode } from '../App'
 import styles from './LandingPage.module.css'
 
@@ -113,55 +114,8 @@ export default function LandingPage() {
             {/* ── Parallax Hero ────────────────────────────────────── */}
             <ParallaxHero />
 
-            {/* Interactive Journey Timeline */}
-            <section className={styles.journeySection}>
-                <div className="container">
-                    <div className={styles.journeyLayout}>
-                        <div className={styles.journeyText}>
-                            <div className="section-label">A Parent's Peace of Mind</div>
-                            <h2 className="hero-title-cinematic">From home to gate, sorted in seconds.</h2>
-                            <p style={{ marginTop: '24px', opacity: 0.7, maxWidth: '400px' }}>
-                                We've mapped every friction point of family travel. WanderFam doesn't just show a map; it shows you the path of least resistance.
-                            </p>
-                        </div>
-
-                        <div className={styles.journeyVisual}>
-                            <div className={styles.journeyTrack}>
-                                <motion.div
-                                    className={styles.journeyProgress}
-                                    initial={{ height: 0 }}
-                                    whileInView={{ height: '100%' }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1.5, ease: "easeInOut" }}
-                                />
-                            </div>
-
-                            {[
-                                { label: 'T-Minus 2 Hours', title: 'Smart Packing', desc: 'Auto-sync luggage lists with your partner so nothing gets left behind.', color: 'var(--blue-soft)' },
-                                { label: 'Arrival', title: 'Fast-Track Security', desc: 'Live Wait times and child-friendly lane guidance at 50+ airports.', color: 'var(--iris)' },
-                                { label: 'Wait Time', title: 'Sky-Lounge Guide', desc: 'Find the nearest play area or quiet zone with one tap.', color: 'var(--mint)' },
-                                { label: 'Boarding', title: 'Perfect Timing', desc: 'Smart alerts when your specific zone is called, not just the flight.', color: 'var(--peach)' }
-                            ].map((step, i) => (
-                                <motion.div
-                                    key={i}
-                                    className={styles.journeyStep + ' ' + styles.stepActive}
-                                    initial={{ opacity: 0, x: 30 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true, margin: '-50px' }}
-                                    transition={{ delay: i * 0.2, duration: 0.6 }}
-                                >
-                                    <div className={styles.stepIndicator} />
-                                    <div className={styles.stepCard}>
-                                        <div className={styles.stepLabel}>{step.label}</div>
-                                        <div className={styles.stepTitle}>{step.title}</div>
-                                        <div className={styles.stepDesc}>{step.desc}</div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* ── Cinematic "How It Works" ────────────────────────────────────── */}
+            <CinematicJourney />
 
             {/* CTA Footer */}
             <section className={`section ${styles.ctaSection}`}>
