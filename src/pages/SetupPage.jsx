@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plane, Users, Calendar, Clock, Check, ArrowRight, ArrowLeft, ChevronDown, Gamepad2, Navigation, AlertCircle, Plus, Lock } from 'lucide-react'
+import { Plane, Users, Calendar, Clock, Check, ArrowRight, ArrowLeft, ChevronDown, ChevronRight, Gamepad2, Navigation, AlertCircle, Plus, Lock } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import PageWrapper from '../components/PageWrapper'
 import styles from './SetupPage.module.css'
@@ -54,6 +54,7 @@ export default function SetupPage() {
     const [isMagic, setIsMagic] = useState(false)
     const [hasSynced, setHasSynced] = useState(false)
     const [activeSection, setActiveSection] = useState('explorers')
+    const [expandedTraveller, setExpandedTraveller] = useState(0)
 
     // Bridge data from BookingPage if available
     useEffect(() => {
@@ -154,146 +155,193 @@ export default function SetupPage() {
                                     )}
                                 </div>
                                 <div className={styles.childCards}>
-                                    {data.travellers.map((traveller, idx) => (
-                                        <div key={idx} className={`glass ${styles.childCard}`}>
-                                            <div className={styles.childAvatar} style={{
-                                                background: traveller.type === 'Adult'
-                                                    ? 'linear-gradient(135deg, var(--iris), var(--sky))'
-                                                    : 'linear-gradient(135deg, var(--sky), var(--mint))',
-                                                border: '2px solid rgba(255,255,255,0.1)'
-                                            }}>
-                                                {traveller.name ? traveller.name[0] : '?'}
-                                            </div>
-                                            <div className={styles.childInfo}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                                                    <input
-                                                        className={styles.childNameInput}
-                                                        value={traveller.name}
-                                                        placeholder="Traveller Name"
-                                                        onChange={e => {
-                                                            const newT = [...data.travellers]
-                                                            newT[idx].name = e.target.value
-                                                            update('travellers', newT)
-                                                        }}
-                                                    />
-                                                    <span className="badge" style={{ fontSize: '10px', opacity: 0.8 }}>{traveller.type}</span>
-                                                </div>
-                                                <div className={styles.childFields}>
-                                                    <div className={styles.miniField}>
-                                                        <label>Age</label>
-                                                        <div className={styles.stepper}>
-                                                            <button className={styles.stepBtn} onClick={() => {
-                                                                const newT = [...data.travellers]
-                                                                newT[idx].age = Math.max(1, parseInt(traveller.age) - 1).toString()
-                                                                update('travellers', newT)
-                                                            }}>−</button>
-                                                            <div className={styles.stepValue}>{traveller.age}</div>
-                                                            <button className={styles.stepBtn} onClick={() => {
-                                                                const newT = [...data.travellers]
-                                                                newT[idx].age = Math.min(99, parseInt(traveller.age) + 1).toString()
-                                                                update('travellers', newT)
-                                                            }}>+</button>
-                                                        </div>
+                                    {data.travellers.map((traveller, idx) => {
+                                        const isExpanded = expandedTraveller === idx;
+                                        return (
+                                            <div
+                                                key={idx}
+                                                className={`glass ${styles.childCard} ${!isExpanded ? styles.childCardCollapsed : ''}`}
+                                                onClick={() => !isExpanded && setExpandedTraveller(idx)}
+                                            >
+                                                <div className={styles.childCardHeader}>
+                                                    <div className={styles.childAvatar} style={{
+                                                        background: traveller.type === 'Adult'
+                                                            ? 'linear-gradient(135deg, var(--iris), var(--sky))'
+                                                            : 'linear-gradient(135deg, var(--sky), var(--mint))',
+                                                        border: '2px solid rgba(255,255,255,0.1)',
+                                                        width: isExpanded ? 48 : 32,
+                                                        height: isExpanded ? 48 : 32,
+                                                        fontSize: isExpanded ? '1.2rem' : '0.9rem'
+                                                    }}>
+                                                        {traveller.name ? traveller.name[0] : '?'}
                                                     </div>
-                                                    <div className={styles.miniField} style={{ flex: 2 }}>
-                                                        <label>{traveller.type === 'Adult' ? 'Focus / Needs' : 'Interests'}</label>
-                                                        <div className={styles.interestGrid}>
-                                                            {(traveller.type === 'Adult' ? ['Relaxing', 'Monitoring', 'Accessibility'] : INTEREST_OPTIONS.map(o => o.label)).map(opt => (
-                                                                <button
-                                                                    key={opt}
-                                                                    className={`${styles.interestChip} ${traveller.likes.includes(opt) ? styles.interestChipActive : ''}`}
-                                                                    onClick={() => {
-                                                                        const likes = traveller.likes.split(', ').filter(x => x)
-                                                                        const newL = likes.includes(opt) ? likes.filter(x => x !== opt) : [...likes, opt]
-                                                                        const newT = [...data.travellers]
-                                                                        newT[idx].likes = newL.join(', ')
-                                                                        update('travellers', newT)
-                                                                    }}
-                                                                >
-                                                                    {opt}
-                                                                </button>
-                                                            ))}
-                                                        </div>
+                                                    <div className={styles.childBaseInfo}>
+                                                        {isExpanded ? (
+                                                            <input
+                                                                className={styles.childNameInput}
+                                                                value={traveller.name}
+                                                                placeholder="Traveller Name"
+                                                                onClick={e => e.stopPropagation()}
+                                                                onChange={e => {
+                                                                    const newT = [...data.travellers]
+                                                                    newT[idx].name = e.target.value
+                                                                    update('travellers', newT)
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <span className={styles.collapsedName}>{traveller.name || 'New Traveller'}</span>
+                                                        )}
+                                                        <span className="badge" style={{ fontSize: '10px', opacity: 0.8 }}>{traveller.type}</span>
                                                     </div>
+                                                    {!isExpanded && (
+                                                        <div className={styles.expandHint}>
+                                                            {traveller.likes ? <span className={styles.likesPreview}>{traveller.likes.split(',')[0]}...</span> : null}
+                                                            <ChevronRight size={14} />
+                                                        </div>
+                                                    )}
                                                 </div>
+
+                                                <AnimatePresence>
+                                                    {isExpanded && (
+                                                        <motion.div
+                                                            initial={{ height: 0, opacity: 0 }}
+                                                            animate={{ height: 'auto', opacity: 1 }}
+                                                            exit={{ height: 0, opacity: 0 }}
+                                                            className={styles.expandedContent}
+                                                        >
+                                                            <div className={styles.childFields}>
+                                                                <div className={styles.miniField}>
+                                                                    <label>Age</label>
+                                                                    {traveller.type === 'Adult' ? (
+                                                                        <select
+                                                                            className={styles.ageSelect}
+                                                                            value={traveller.age}
+                                                                            onChange={e => {
+                                                                                const newT = [...data.travellers]
+                                                                                newT[idx].age = e.target.value
+                                                                                update('travellers', newT)
+                                                                            }}
+                                                                        >
+                                                                            {Array.from({ length: 82 }, (_, i) => 18 + i).map(a => (
+                                                                                <option key={a} value={a}>{a}</option>
+                                                                            ))}
+                                                                        </select>
+                                                                    ) : (
+                                                                        <div className={styles.stepper}>
+                                                                            <button className={styles.stepBtn} onClick={e => {
+                                                                                e.stopPropagation()
+                                                                                const newT = [...data.travellers]
+                                                                                newT[idx].age = Math.max(1, parseInt(traveller.age) - 1).toString()
+                                                                                update('travellers', newT)
+                                                                            }}>−</button>
+                                                                            <div className={styles.stepValue}>{traveller.age}</div>
+                                                                            <button className={styles.stepBtn} onClick={e => {
+                                                                                e.stopPropagation()
+                                                                                const newT = [...data.travellers]
+                                                                                newT[idx].age = Math.min(17, parseInt(traveller.age) + 1).toString()
+                                                                                update('travellers', newT)
+                                                                            }}>+</button>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                <div className={styles.miniField} style={{ flex: 2 }}>
+                                                                    <label>{traveller.type === 'Adult' ? 'Focus / Needs' : 'Interests'}</label>
+                                                                    <div className={styles.interestScrollRow}>
+                                                                        {(traveller.type === 'Adult' ? ['Relaxing', 'Monitoring', 'Accessibility'] : INTEREST_OPTIONS.map(o => o.label)).map(opt => (
+                                                                            <button
+                                                                                key={opt}
+                                                                                className={`${styles.interestChip} ${traveller.likes.includes(opt) ? styles.interestChipActive : ''}`}
+                                                                                onClick={e => {
+                                                                                    e.stopPropagation()
+                                                                                    const likes = traveller.likes.split(', ').filter(x => x)
+                                                                                    const newL = likes.includes(opt) ? likes.filter(x => x !== opt) : [...likes, opt]
+                                                                                    const newT = [...data.travellers]
+                                                                                    newT[idx].likes = newL.join(', ')
+                                                                                    update('travellers', newT)
+                                                                                }}
+                                                                            >
+                                                                                {opt}
+                                                                            </button>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
                                             </div>
-                                        </div>
-                                    ))}
-                                    <button className={styles.addChildBtn} onClick={() => update('travellers', [...data.travellers, { name: 'New Traveller', age: '30', type: 'Adult', likes: '', needs: [] }])}>
+                                        )
+                                    })}
+                                    <button className={styles.addChildBtn} onClick={() => {
+                                        const newT = [...data.travellers, { name: 'New Traveller', age: '30', type: 'Adult', likes: '', needs: [] }]
+                                        update('travellers', newT)
+                                        setExpandedTraveller(newT.length - 1)
+                                    }}>
                                         <Plus size={20} /> Add Family Member
                                     </button>
                                 </div>
                             </section>
 
-                            {/* Section 2: Flight */}
                             <section id="flight" className={styles.formSection}>
                                 <div className={styles.sectionHeader}>
-                                    <h3><Plane size={22} color="var(--sky)" /> Flight Details</h3>
+                                    <h3><Plane size={22} color="var(--sky)" /> Flight Summary</h3>
                                     {hasSynced && <div className={styles.linkedBadge}><Check size={10} /> SYNCED</div>}
                                 </div>
-                                <div className={`glass ${styles.flightCard}`}>
-                                    <div className={styles.fieldRow}>
-                                        <div className={styles.lockedField}>
-                                            <label><Navigation size={12} /> From</label>
-                                            <input className={`${styles.input} ${styles.lockedInput}`} value={data.departure} readOnly />
-                                            <div className={styles.lockedIcon}><Lock size={14} /></div>
+                                <div className={`glass ${styles.flightCardCondensed}`}>
+                                    <div className={styles.flightMainStrip}>
+                                        <div className={styles.flightPath}>
+                                            <span className={styles.airportCode}>{data.departure}</span>
+                                            <div className={styles.flightVisual}>
+                                                <div className={styles.dot} />
+                                                <div className={styles.dashedLine} />
+                                                <Plane size={14} className={styles.planeIcon} />
+                                                <div className={styles.dashedLine} />
+                                                <div className={styles.dot} />
+                                            </div>
+                                            <span className={styles.airportCode}>{data.destination}</span>
                                         </div>
-                                        <div className={styles.lockedField}>
-                                            <label><Plane size={12} /> To</label>
-                                            <input className={`${styles.input} ${styles.lockedInput}`} value={data.destination} readOnly />
-                                            <div className={styles.lockedIcon}><Lock size={14} /></div>
+                                        <div className={styles.flightInfoBadge}>
+                                            <strong>{data.flightNumber}</strong>
+                                            <span>Boarding at {data.boardingTime}</span>
                                         </div>
                                     </div>
-                                    <div className={styles.fieldRow}>
-                                        <div className={styles.lockedField}>
-                                            <label>Flight No</label>
-                                            <input className={`${styles.input} ${styles.lockedInput}`} value={data.flightNumber} readOnly />
-                                            <div className={styles.lockedIcon}><Lock size={14} /></div>
-                                        </div>
-                                        <div className={styles.lockedField}>
-                                            <label><Clock size={12} /> Boarding at</label>
-                                            <input className={`${styles.input} ${styles.lockedInput}`} value={data.boardingTime} readOnly />
-                                            <div className={styles.lockedIcon}><Lock size={14} /></div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.miniField}>
-                                        <label><Clock size={12} /> Recommended Airport Arrival</label>
-                                        <div className={styles.timePickerContainer}>
-                                            <div className={styles.stepper} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '4px' }}>
-                                                <button className={styles.stepBtn} onClick={() => {
-                                                    let [h, m] = data.arrivalAtAirport.split(':').map(Number)
-                                                    h = (h - 1 + 24) % 24
-                                                    update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
-                                                }}>−</button>
-                                                <div className={styles.timeInput} style={{ background: 'none', border: 'none', width: '40px' }}>{data.arrivalAtAirport.split(':')[0]}</div>
-                                                <button className={styles.stepBtn} onClick={() => {
-                                                    let [h, m] = data.arrivalAtAirport.split(':').map(Number)
-                                                    h = (h + 1) % 24
-                                                    update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
-                                                }}>+</button>
-                                            </div>
-                                            <span style={{ color: 'var(--text-muted)', fontWeight: 800 }}>:</span>
-                                            <div className={styles.stepper} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '4px' }}>
-                                                <button className={styles.stepBtn} onClick={() => {
-                                                    let [h, m] = data.arrivalAtAirport.split(':').map(Number)
-                                                    m = (m - 15 + 60) % 60
-                                                    update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
-                                                }}>−</button>
-                                                <div className={styles.timeInput} style={{ background: 'none', border: 'none', width: '40px' }}>{data.arrivalAtAirport.split(':')[1]}</div>
-                                                <button className={styles.stepBtn} onClick={() => {
-                                                    let [h, m] = data.arrivalAtAirport.split(':').map(Number)
-                                                    m = (m + 15) % 60
-                                                    update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
-                                                }}>+</button>
-                                            </div>
-                                            <div style={{ marginLeft: '12px', fontSize: '11px', color: 'var(--sky)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                                Adjust Arrival
+                                    <div className={styles.flightSubFields}>
+                                        <div className={styles.miniField}>
+                                            <label><Clock size={12} /> Recommended Arrival</label>
+                                            <div className={styles.timePickerContainer}>
+                                                <div className={styles.stepperCompact}>
+                                                    <button onClick={() => {
+                                                        let [h, m] = data.arrivalAtAirport.split(':').map(Number)
+                                                        h = (h - 1 + 24) % 24
+                                                        update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
+                                                    }}>−</button>
+                                                    <div className={styles.timeInput}>{data.arrivalAtAirport.split(':')[0]}</div>
+                                                    <button onClick={() => {
+                                                        let [h, m] = data.arrivalAtAirport.split(':').map(Number)
+                                                        h = (h + 1) % 24
+                                                        update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
+                                                    }}>+</button>
+                                                </div>
+                                                <span className={styles.timeDivider}>:</span>
+                                                <div className={styles.stepperCompact}>
+                                                    <button onClick={() => {
+                                                        let [h, m] = data.arrivalAtAirport.split(':').map(Number)
+                                                        m = (m - 15 + 60) % 60
+                                                        update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
+                                                    }}>−</button>
+                                                    <div className={styles.timeInput}>{data.arrivalAtAirport.split(':')[1]}</div>
+                                                    <button onClick={() => {
+                                                        let [h, m] = data.arrivalAtAirport.split(':').map(Number)
+                                                        m = (m + 15) % 60
+                                                        update('arrivalAtAirport', `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
+                                                    }}>+</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={styles.timingSummary}>
-                                        <div className={styles.timeIcon}><Clock size={16} /></div>
-                                        <span>We've scheduled <strong>{timeDiff}</strong> at the airport. This ensures Leo and the family have a calm, stress-free transition.</span>
+                                    <div className={styles.timingSummaryCondensed}>
+                                        <div className={styles.timeIcon}><Clock size={14} /></div>
+                                        <span>We've scheduled <strong>{timeDiff}</strong> at the airport for a calm transition.</span>
                                     </div>
                                 </div>
                             </section>
@@ -331,7 +379,7 @@ export default function SetupPage() {
 
                             {/* Final CTA for Mobile/Standard Flow */}
                             <button className={`btn btn-primary ${styles.mainCTA}`} onClick={handleLaunch}>
-                                Generate My Family Hub <ArrowRight size={24} />
+                                Launch Journey <ArrowRight size={18} />
                             </button>
                         </div>
 

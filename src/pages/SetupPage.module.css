@@ -118,10 +118,39 @@
 
 .childCard {
     display: flex;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
     padding: 24px;
-    border-radius: var(--radius-lg);
+    gap: 16px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.childCardCollapsed {
+    padding: 16px 20px;
+    gap: 0;
+}
+
+.childCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.childBaseInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.collapsedName {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
 }
 
 .childAvatar {
@@ -144,11 +173,32 @@
 .childNameInput {
     background: transparent;
     border: none;
-    font-size: 1.25rem;
-    font-weight: 700;
+    border-bottom: 2px solid var(--sky);
     color: #fff;
-    margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    padding: 4px 0;
     width: 100%;
+    outline: none;
+}
+
+.expandHint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+}
+
+.likesPreview {
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+.expandedContent {
+    overflow: hidden;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
 }
 
 .childNameInput:focus {
@@ -190,6 +240,132 @@
     background: rgba(255, 255, 255, 0.08);
 }
 
+.flightCardCondensed {
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.flightMainStrip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.flightPath {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.airportCode {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #fff;
+}
+
+.flightVisual {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    opacity: 0.4;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.dashedLine {
+    flex: 1;
+    height: 1px;
+    border-top: 1px dashed #fff;
+}
+
+.planeIcon {
+    transform: rotate(90deg);
+}
+
+.flightInfoBadge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.flightInfoBadge strong {
+    font-size: 1.1rem;
+    color: var(--sky);
+}
+
+.flightInfoBadge span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.flightSubFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.stepperCompact {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stepperCompact button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.stepperCompact button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.timeInput {
+    width: 32px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.timeDivider {
+    color: var(--text-muted);
+    font-weight: 900;
+}
+
+.timingSummaryCondensed {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(56, 189, 248, 0.05);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--text-body);
+}
+
 .lockedInput {
     background: rgba(255, 255, 255, 0.02) !important;
     border-color: rgba(255, 255, 255, 0.05) !important;
@@ -223,6 +399,30 @@
 
 .stepBtn:hover {
     background: rgba(255, 255, 255, 0.08);
+}
+
+.ageSelect {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.interestScrollRow {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.interestScrollRow::-webkit-scrollbar {
+    display: none;
 }
 
 .stepValue {
@@ -665,15 +865,34 @@
 
     .mainCTA {
         position: fixed;
-        bottom: 24px;
-        left: 24px;
-        right: 24px;
-        z-index: 100;
-        width: auto;
+        bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+        left: 20px;
+        right: 20px;
+        z-index: 1000;
+        width: calc(100% - 40px);
+        padding: 14px 24px;
+        font-size: 1rem;
+        border-radius: 100px;
+        background: #fff;
+        /* Keep high contrast but smaller */
+        color: #000;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        height: 56px;
+        margin-top: 0;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    }
+
+    .mainCTA:active {
+        transform: scale(0.96) translateY(2px);
     }
 
     .wrapper {
-        padding-bottom: 120px;
+        padding-bottom: 140px;
+        /* More room to scroll past the fixed CTA */
     }
 
     .wizardContainer {
