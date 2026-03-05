@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ArrowRight, Plus, ChevronDown, Check, Lock, Shield, Plane, Luggage, Wifi } from 'lucide-react'
+import { ArrowRight, Plus, ChevronDown, Check, Lock, Shield, Plane, Luggage, Wifi, Baby, Utensils, Calendar, User, CreditCard } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import PageWrapper from '../components/PageWrapper'
 import styles from './BookingPage.module.css'
@@ -45,6 +45,12 @@ const INITIAL_PASSENGERS = [
         color: '#4ade80', expanded: false,
     },
 ]
+
+const getInitials = (p) => {
+    const f = (p.firstName || '').charAt(0)
+    const l = (p.lastName || '').charAt(0)
+    return (f + l).toUpperCase() || 'P'
+}
 
 /* ================================================================
    TRIP SNAPSHOT CARD  (persistent right column)
@@ -127,14 +133,63 @@ function TripSnapshotCard({ flight, step }) {
 /* ================================================================
    STEP 1 — PASSENGER LIST
    ================================================================ */
-function PassengersStep({ onNext }) {
-    const [passengers, setPassengers] = useState(INITIAL_PASSENGERS)
-
+function PassengersStep({ onNext, passengers, setPassengers }) {
     const toggle = (id) => {
         setPassengers(p => p.map(px => ({ ...px, expanded: px.id === id ? !px.expanded : false })))
     }
 
-    const initials = (p) => `${p.firstName[0]}${p.lastName[0]}`
+    const handleAddPassenger = () => {
+        const newId = passengers.length + 1
+        const colors = ['#38bdf8', '#a855f7', '#4ade80', '#fb923c', '#f43f5e']
+        const newPax = {
+            id: newId,
+            firstName: '',
+            lastName: '',
+            type: 'Adult',
+            seat: `${12 + newId}${String.fromCharCode(65 + (newId % 6))}`,
+            meal: 'Standard meal',
+            isYou: false,
+            dob: '//',
+            gender: 'Male',
+            nationality: '',
+            passport: '',
+            passExpiry: '',
+            color: colors[newId % colors.length],
+            expanded: true
+        }
+        setPassengers([...passengers.map(p => ({ ...p, expanded: false })), newPax])
+        toast.success("New traveller added")
+    }
+
+    const handleRemovePassenger = (id) => {
+        if (passengers.length === 1) {
+            toast.error("At least one traveller is required")
+            return
+        }
+        setPassengers(passengers.filter(p => p.id !== id))
+    }
+
+
+    const handleUpdate = (id, field, value) => {
+        setPassengers(passengers.map(p => {
+            if (p.id === id) {
+                const updated = { ...p, [field]: value }
+                if (field === 'dob' || field.includes('dob')) {
+                    const parts = updated.dob.split('/')
+                    if (parts[2] && parts[2].length === 4) {
+                        const birthYear = parseInt(parts[2])
+                        const currentYear = new Date().getFullYear()
+                        const age = currentYear - birthYear
+                        updated.type = age < 14 ? 'Child' : 'Adult'
+                    }
+                }
+                return updated
+            }
+            return p
+        }))
+    }
+
+
 
     return (
         <div className={styles.stepPanel}>
@@ -145,22 +200,31 @@ function PassengersStep({ onNext }) {
                 </div>
 
                 <div className={styles.passengerList}>
-                    {passengers.map(p => (
+                    {passengers.map((p, index) => (
                         <div key={p.id} className={styles.passengerCard}>
                             {/* ── Summary row ── */}
                             <div className={styles.paxSummary} onClick={() => toggle(p.id)}>
                                 <div className={styles.avatar} style={{ background: `${p.color}22`, border: `2px solid ${p.color}55` }}>
-                                    <span style={{ color: p.color }}>{initials(p)}</span>
+                                    <span style={{ color: p.color }}>{getInitials(p)}</span>
                                 </div>
                                 <div className={styles.paxInfo}>
+                                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                        Traveller {index + 1}
+                                    </div>
                                     <div className={styles.paxName}>
-                                        {p.firstName} {p.lastName}
+                                        {p.firstName || 'New Traveller'} {p.lastName}
                                         {p.isYou && <span className={styles.youBadge}>YOU</span>}
                                     </div>
                                     <div className={styles.paxPills}>
-                                        <span className={`${styles.pill} ${styles.pillGray}`}>{p.type}</span>
-                                        <span className={`${styles.pill} ${styles.pillBlue}`}>Seat {p.seat}</span>
-                                        <span className={`${styles.pill} ${styles.pillGreen}`}>{p.meal}</span>
+                                        <span className={`${styles.pill} ${p.type === 'Child' ? styles.pillPurple : styles.pillGray}`}>
+                                            {p.type === 'Child' ? <Baby size={12} /> : <User size={12} />} {p.type}
+                                        </span>
+                                        <span className={`${styles.pill} ${styles.pillBlue}`}>
+                                            <CreditCard size={12} /> Seat {p.seat}
+                                        </span>
+                                        <span className={`${styles.pill} ${styles.pillGreen}`}>
+                                            <Utensils size={12} /> {p.meal}
+                                        </span>
                                     </div>
                                 </div>
                                 <ChevronDown
@@ -181,55 +245,126 @@ function PassengersStep({ onNext }) {
                                     >
                                         <div className={styles.paxForm}>
                                             <div className={styles.field}>
-                                                <label className={styles.fieldLabel}>First name</label>
-                                                <input className={styles.fieldInput} defaultValue={p.firstName} />
+                                                <label className={styles.fieldLabel}><User size={11} /> First name</label>
+                                                <input
+                                                    className={styles.fieldInput}
+                                                    placeholder="e.g. Zayn"
+                                                    value={p.firstName}
+                                                    onChange={(e) => handleUpdate(p.id, 'firstName', e.target.value)}
+                                                />
                                             </div>
                                             <div className={styles.field}>
-                                                <label className={styles.fieldLabel}>Last name</label>
-                                                <input className={styles.fieldInput} defaultValue={p.lastName} />
+                                                <label className={styles.fieldLabel}><User size={11} /> Last name</label>
+                                                <input
+                                                    className={styles.fieldInput}
+                                                    placeholder="e.g. Ahmed"
+                                                    value={p.lastName}
+                                                    onChange={(e) => handleUpdate(p.id, 'lastName', e.target.value)}
+                                                />
                                             </div>
                                             <div className={styles.field}>
                                                 <label className={styles.fieldLabel}>Gender</label>
-                                                <select className={`${styles.fieldInput} ${styles.fieldSelect}`} defaultValue={p.gender}>
+                                                <select
+                                                    className={`${styles.fieldInput} ${styles.fieldSelect}`}
+                                                    value={p.gender}
+                                                    onChange={(e) => handleUpdate(p.id, 'gender', e.target.value)}
+                                                >
                                                     <option>Male</option><option>Female</option><option>Other</option>
                                                 </select>
                                             </div>
                                             <div className={`${styles.field} ${styles.fieldFull}`}>
-                                                <label className={styles.fieldLabel}>Date of birth</label>
+                                                <label className={styles.fieldLabel}><Calendar size={11} /> Date of birth (Required for age check)</label>
                                                 <div className={styles.dobRow}>
-                                                    <input className={styles.fieldInput} placeholder="DD" defaultValue={p.dob.split('/')[0]} />
-                                                    <input className={styles.fieldInput} placeholder="MM" defaultValue={p.dob.split('/')[1]} />
-                                                    <input className={styles.fieldInput} placeholder="YYYY" defaultValue={p.dob.split('/')[2]} />
+                                                    <input
+                                                        className={styles.fieldInput}
+                                                        placeholder="DD"
+                                                        maxLength={2}
+                                                        value={p.dob.split('/')[0] || ''}
+                                                        onChange={(e) => {
+                                                            const parts = p.dob.split('/')
+                                                            handleUpdate(p.id, 'dob', `${e.target.value}/${parts[1] || ''}/${parts[2] || ''}`)
+                                                        }}
+                                                    />
+                                                    <input
+                                                        className={styles.fieldInput}
+                                                        placeholder="MM"
+                                                        maxLength={2}
+                                                        value={p.dob.split('/')[1] || ''}
+                                                        onChange={(e) => {
+                                                            const parts = p.dob.split('/')
+                                                            handleUpdate(p.id, 'dob', `${parts[0] || ''}/${e.target.value}/${parts[2] || ''}`)
+                                                        }}
+                                                    />
+                                                    <input
+                                                        className={styles.fieldInput}
+                                                        placeholder="YYYY"
+                                                        maxLength={4}
+                                                        value={p.dob.split('/')[2] || ''}
+                                                        onChange={(e) => {
+                                                            const parts = p.dob.split('/')
+                                                            handleUpdate(p.id, 'dob', `${parts[0] || ''}/${parts[1] || ''}/${e.target.value}`)
+                                                        }}
+                                                    />
                                                 </div>
+                                                {p.dob.split('/')[2]?.length === 4 && (
+                                                    <div style={{ fontSize: '11px', color: p.type === 'Child' ? '#c084fc' : '#94a3b8', marginTop: '6px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                        {p.type === 'Child' ? <Baby size={12} /> : <User size={12} />} Categorized as: {p.type}
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className={styles.field}>
                                                 <label className={styles.fieldLabel}>Nationality</label>
-                                                <input className={styles.fieldInput} defaultValue={p.nationality} />
+                                                <input
+                                                    className={styles.fieldInput}
+                                                    value={p.nationality}
+                                                    placeholder="e.g. UAE"
+                                                    onChange={(e) => handleUpdate(p.id, 'nationality', e.target.value)}
+                                                />
                                             </div>
                                             <div className={`${styles.field} ${styles.fieldWide}`}>
-                                                <label className={styles.fieldLabel}>Passport number</label>
-                                                <input className={styles.fieldInput} defaultValue={p.passport} />
+                                                <label className={styles.fieldLabel}><CreditCard size={11} /> Passport number</label>
+                                                <input
+                                                    className={styles.fieldInput}
+                                                    value={p.passport}
+                                                    placeholder="e.g. P1234567"
+                                                    onChange={(e) => handleUpdate(p.id, 'passport', e.target.value)}
+                                                />
                                             </div>
                                             <div className={styles.field}>
-                                                <label className={styles.fieldLabel}>Passport expiry</label>
-                                                <input className={styles.fieldInput} defaultValue={p.passExpiry} placeholder="MM/YYYY" />
+                                                <label className={styles.fieldLabel}>Expiry</label>
+                                                <input
+                                                    className={styles.fieldInput}
+                                                    value={p.passExpiry}
+                                                    placeholder="MM/YYYY"
+                                                    onChange={(e) => handleUpdate(p.id, 'passExpiry', e.target.value)}
+                                                />
                                             </div>
                                             <div className={styles.field}>
-                                                <label className={styles.fieldLabel}>Seat preference</label>
-                                                <select className={`${styles.fieldInput} ${styles.fieldSelect}`} defaultValue={p.seat.includes('A') ? 'Window' : 'Aisle'}>
+                                                <label className={styles.fieldLabel}>Seat</label>
+                                                <select
+                                                    className={`${styles.fieldInput} ${styles.fieldSelect}`}
+                                                    value={p.seat.includes('A') ? 'Window' : 'Aisle'}
+                                                    onChange={(e) => handleUpdate(p.id, 'seat', e.target.value === 'Window' ? '12A' : '12B')}
+                                                >
                                                     <option>Window</option><option>Aisle</option><option>Middle</option>
                                                 </select>
                                             </div>
                                             <div className={styles.field}>
-                                                <label className={styles.fieldLabel}>Meal preference</label>
-                                                <select className={`${styles.fieldInput} ${styles.fieldSelect}`}>
+                                                <label className={styles.fieldLabel}><Utensils size={11} /> Meal</label>
+                                                <select
+                                                    className={`${styles.fieldInput} ${styles.fieldSelect}`}
+                                                    value={p.meal}
+                                                    onChange={(e) => handleUpdate(p.id, 'meal', e.target.value)}
+                                                >
                                                     <option>Standard meal</option>
-                                                    <option selected={p.meal.includes('Veg')}>Vegetarian meal</option>
-                                                    <option selected={p.meal.includes('Child')}>Child meal</option>
-                                                    <option>Halal meal</option>
-                                                    <option>Vegan meal</option>
+                                                    <option>Vegetarian meal</option>
+                                                    <option>Fruit platter</option>
+                                                    <option>Child meal</option>
                                                 </select>
                                             </div>
+                                            <button className={styles.btnRemove} onClick={() => handleRemovePassenger(p.id)}>
+                                                Remove Traveller
+                                            </button>
                                         </div>
                                     </motion.div>
                                 )}
@@ -239,7 +374,7 @@ function PassengersStep({ onNext }) {
                 </div>
 
                 <div className={styles.cardActions}>
-                    <button className={styles.btnGhost}>
+                    <button className={styles.btnGhost} onClick={handleAddPassenger}>
                         <Plus size={15} /> Add another traveller
                     </button>
                     <button className={styles.btnPrimary} onClick={onNext}>
@@ -271,7 +406,7 @@ function Barcode() {
 /* ================================================================
    STEP 2 — FLIGHT DETAILS
    ================================================================ */
-function FlightStep({ flight, onNext }) {
+function FlightStep({ flight, onNext, passengers }) {
     const milestones = [
         { label: 'Check-in', time: '05:45', icon: '🏷', status: 'done' },
         { label: 'Boarding', time: '08:15', icon: '🚪', status: 'done' },
@@ -297,62 +432,142 @@ function FlightStep({ flight, onNext }) {
     return (
         <div className={styles.stepPanel}>
             {/* ── Boarding Pass ── */}
-            <div className={styles.boardingPass}>
-                <div className={styles.bpTop}>
-                    <div className={styles.bpAirport}>
-                        <div className={styles.bpCode}>{flight.from.code}</div>
-                        <div className={styles.bpCity}>{flight.from.city}</div>
+            <div className={styles.boardingPassRealistic}>
+                <div className={styles.bpRedHeader}>
+                    <div className={styles.bpHeaderAirlines}>
+                        <Plane size={24} className={styles.bpPlaneIcon} />
+                        <span>AIRNEST AIRLINES</span>
                     </div>
-                    <div className={styles.bpMiddle}>
-                        <div className={styles.bpArrow}>
-                            <div className={styles.arrowLine} />
-                            <Plane size={18} />
-                            <div className={styles.arrowLine} />
-                        </div>
-                        <div className={styles.bpDuration}>{flight.duration} · Non-stop</div>
-                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 4 }}>
-                            {flight.airline} · {flight.flightNo}
-                        </div>
-                    </div>
-                    <div className={`${styles.bpAirport} ${styles.right}`}>
-                        <div className={styles.bpCode}>{flight.to.code}</div>
-                        <div className={styles.bpCity}>{flight.to.city}</div>
-                    </div>
+                    <div className={styles.bpHeaderTitle}>BOARDING PASS</div>
+                    <div className={styles.bpHeaderStubTitle}>BOARDING PASS</div>
                 </div>
 
-                <div className={styles.bpTimes}>
-                    <div className={styles.bpTime}>
-                        <div className={styles.bpTimeLabel}>Departure</div>
-                        <div className={styles.bpTimeValue}>{flight.depart.time}</div>
-                        <div className={styles.bpTimeDate}>{flight.depart.date}</div>
-                    </div>
-                    <div className={`${styles.bpTime} ${styles.right}`}>
-                        <div className={styles.bpTimeLabel}>Arrival</div>
-                        <div className={styles.bpTimeValue}>{flight.arrive.time}</div>
-                        <div className={styles.bpTimeDate}>{flight.arrive.date}</div>
-                    </div>
-                </div>
+                <div className={styles.bpBody}>
+                    {/* Main Part */}
+                    <div className={styles.bpMain}>
+                        <div className={styles.bpRouteRow}>
+                            <div className={styles.bpPoint}>
+                                <div className={styles.bpLabel}>From</div>
+                                <div className={styles.bpBigCode}>{flight.from.city.toUpperCase()}</div>
+                            </div>
+                            <div className={styles.bpRouteIcon}>
+                                <div className={styles.bpDashedLine} />
+                                <Plane size={20} className={styles.bpRoutePlane} />
+                                <div className={styles.bpDashedLine} />
+                            </div>
+                            <div className={styles.bpPoint}>
+                                <div className={styles.bpLabel}>To</div>
+                                <div className={styles.bpBigCode}>{flight.to.city.toUpperCase()}</div>
+                            </div>
+                        </div>
 
-                <div className={styles.bpPerforation} />
+                        <div className={styles.bpInfoGrid}>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Passenger</div>
+                                <div className={styles.bpInfoValue}>{passengers[0].firstName} {passengers[0].lastName}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Flight</div>
+                                <div className={styles.bpInfoValue}>{flight.flightNo}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Date</div>
+                                <div className={styles.bpInfoValue}>15 JUL 30</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Time</div>
+                                <div className={styles.bpInfoValue}>{flight.depart.time}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Arrival time</div>
+                                <div className={styles.bpInfoValue}>{flight.arrive.time}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Gate</div>
+                                <div className={styles.bpInfoValue}>{flight.from.gate}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Boarding Till</div>
+                                <div className={styles.bpInfoValue}>12:20</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Seat</div>
+                                <div className={styles.bpInfoValue}>{passengers[0].seat}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Terminal</div>
+                                <div className={styles.bpInfoValue}>{flight.from.terminal}</div>
+                            </div>
+                        </div>
 
-                <div className={styles.bpBottom}>
-                    <div className={styles.bpMeta}>
-                        <div className={styles.bpMetaRow}>
-                            {[
-                                { label: 'Flight', value: flight.flightNo },
-                                { label: 'Class', value: flight.class },
-                                { label: 'Terminal', value: `T${flight.from.terminal}` },
-                                { label: 'Gate', value: flight.from.gate },
-                                { label: 'Seat', value: '12A' },
-                            ].map(m => (
-                                <div key={m.label} className={styles.bpMetaItem}>
-                                    <div className={styles.bpMetaLabel}>{m.label}</div>
-                                    <div className={styles.bpMetaValue}>{m.value}</div>
-                                </div>
-                            ))}
+                        <div className={styles.bpFooterNote}>
+                            BOARDING GATE CLOSE 15 MINUTES PRIOR TO DEPARTURE TIME
+                        </div>
+
+                        <div className={styles.bpSideBarcode}>
+                            <span>0 1 2 3 4 5 6 7 8 9 1 0</span>
+                            <div className={styles.bpVerticalBars}>
+                                {[1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1].map((h, i) => (
+                                    <div key={i} style={{ height: `${20 + h * 5}px` }} />
+                                ))}
+                            </div>
                         </div>
                     </div>
-                    <Barcode />
+
+                    {/* Perforation */}
+                    <div className={styles.bpPerforationVertical} />
+
+                    {/* Stub Part */}
+                    <div className={styles.bpStub}>
+                        <div className={styles.bpInfoGroup}>
+                            <div className={styles.bpLabel}>Passenger</div>
+                            <div className={styles.bpInfoValue}>{passengers[0].firstName} {passengers[0].lastName}</div>
+                        </div>
+                        <div className={styles.bpInfoGroup}>
+                            <div className={styles.bpLabel}>From</div>
+                            <div className={styles.bpInfoValue}>{flight.from.city}</div>
+                        </div>
+                        <div className={styles.bpInfoGroup}>
+                            <div className={styles.bpLabel}>To</div>
+                            <div className={styles.bpInfoValue}>{flight.to.city}</div>
+                        </div>
+
+                        <div className={styles.bpStubGrid}>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Flight</div>
+                                <div className={styles.bpInfoValue}>{flight.flightNo}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Date</div>
+                                <div className={styles.bpInfoValue}>15 JUL 30</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Time</div>
+                                <div className={styles.bpInfoValue}>{flight.depart.time}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Gate</div>
+                                <div className={styles.bpInfoValue}>{flight.from.gate}</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Boarding Till</div>
+                                <div className={styles.bpInfoValue}>12:20</div>
+                            </div>
+                            <div className={styles.bpInfoGroup}>
+                                <div className={styles.bpLabel}>Seat</div>
+                                <div className={styles.bpInfoValue}>{passengers[0].seat}</div>
+                            </div>
+                        </div>
+
+                        <div className={styles.bpStubBarcode}>
+                            <div className={styles.bpHorizontalBars}>
+                                {[1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2, 3, 4].map((h, i) => (
+                                    <div key={i} style={{ height: '30px', width: '2px' }} />
+                                ))}
+                            </div>
+                            <span>0 1 2 3 4 5  6 7 8 9 1 0</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -399,8 +614,7 @@ function FlightStep({ flight, onNext }) {
 /* ================================================================
    STEP 3 — TRIP SUMMARY
    ================================================================ */
-function SummaryStep({ flight, onComplete }) {
-    const passengers = INITIAL_PASSENGERS
+function SummaryStep({ flight, onComplete, passengers, onEdit }) {
     const priceRows = [
         { label: 'Flights (3 passengers)', value: 'AED 4,140' },
         { label: 'Taxes & fees', value: 'AED 620' },
@@ -449,16 +663,28 @@ function SummaryStep({ flight, onComplete }) {
             <div className={styles.passengersSummary}>
                 <div className={styles.paxSummaryHeader}>
                     <div className={styles.paxSummaryTitle}>Passengers</div>
-                    <button className={styles.editLink}>Edit passengers</button>
+                    <button className={styles.editLink} onClick={() => onEdit('passengers')}>Edit passengers</button>
                 </div>
                 {passengers.map(p => (
                     <div key={p.id} className={styles.paxSummaryRow}>
                         <div className={styles.avatar} style={{ width: 34, height: 34, fontSize: 12, background: `${p.color}22`, border: `2px solid ${p.color}55` }}>
-                            <span style={{ color: p.color }}>{p.firstName[0]}{p.lastName[0]}</span>
+                            <span style={{ color: p.color }}>{getInitials(p)}</span>
                         </div>
-                        <div>
-                            <div className={styles.paxSummaryInfo}>{p.firstName} {p.lastName}</div>
-                            <div className={styles.paxSummaryMeta}>{p.type} · Seat {p.seat} · {p.seat.includes('A') || p.seat.includes('C') ? 'Window' : 'Aisle'} · {p.meal}</div>
+                        <div className={styles.paxSummaryContent}>
+                            <div className={styles.paxSummaryInfo}>
+                                {p.firstName} {p.lastName} {p.isYou && <span className={styles.youBadgeMini}>YOU</span>}
+                            </div>
+                            <div className={styles.paxSummaryMeta}>
+                                <span className={styles.metaItem}>
+                                    {p.type === 'Child' ? <Baby size={11} /> : <User size={11} />} {p.type}
+                                </span>
+                                <span className={styles.metaItem}>
+                                    <CreditCard size={11} /> Seat {p.seat}
+                                </span>
+                                <span className={styles.metaItem}>
+                                    <Utensils size={11} /> {p.meal}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -510,7 +736,7 @@ function Stepper({ current, onChange }) {
                 const isActive = i === ci
                 return (
                     <div key={s.id} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                        <div className={styles.stepItem} onClick={() => isDone && onChange(s.id)}>
+                        <div className={styles.stepItem} onClick={() => onChange(s.id)}>
                             <div className={`${styles.stepBubble} ${isActive ? styles.stepBubbleActive : ''} ${isDone ? styles.stepBubbleDone : ''}`}>
                                 {isDone ? <Check size={13} /> : i + 1}
                             </div>
@@ -533,6 +759,7 @@ function Stepper({ current, onChange }) {
    ================================================================ */
 export default function BookingPage() {
     const [step, setStep] = useState('passengers')
+    const [passengers, setPassengers] = useState(INITIAL_PASSENGERS)
     const location = useLocation()
     const navigate = useNavigate()
     const [flight, setFlight] = useState(MOCK_FLIGHT)
@@ -586,7 +813,7 @@ export default function BookingPage() {
                         </p>
 
                         <div className={styles.successActions}>
-                            <button className="btn btn-primary btn-lg" onClick={() => navigate('/setup')}>
+                            <button className="btn btn-primary btn-lg" onClick={() => navigate('/setup', { state: { passengers, flight } })}>
                                 Start Journey Now <ArrowRight size={18} />
                             </button>
                             <button className="btn btn-ghost btn-lg" onClick={() => navigate('/dashboard')}>
@@ -615,9 +842,9 @@ export default function BookingPage() {
                                 exit={{ opacity: 0, y: -8 }}
                                 transition={{ duration: 0.28, ease: 'easeOut' }}
                             >
-                                {step === 'passengers' && <PassengersStep onNext={nextStep} />}
-                                {step === 'flight' && <FlightStep flight={flight} onNext={nextStep} />}
-                                {step === 'summary' && <SummaryStep flight={flight} onComplete={handleComplete} />}
+                                {step === 'passengers' && <PassengersStep onNext={nextStep} passengers={passengers} setPassengers={setPassengers} />}
+                                {step === 'flight' && <FlightStep flight={flight} onNext={nextStep} passengers={passengers} />}
+                                {step === 'summary' && <SummaryStep flight={flight} onComplete={handleComplete} passengers={passengers} onEdit={go} />}
                             </motion.div>
                         </AnimatePresence>
                     </main>

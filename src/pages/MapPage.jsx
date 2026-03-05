@@ -365,6 +365,12 @@ export default function MapPage() {
                         {/* Map canvas */}
                         <div ref={mapRef} className={styles.mapCanvas} />
 
+                        {/* Stroller-friendly route active badge */}
+                        <div className={styles.strollerBadge}>
+                            <Baby size={14} />
+                            <span>Stroller-friendly route active</span>
+                        </div>
+
                         {/* My Location + Floor Switcher */}
                         <div className={styles.mapControls}>
                             <button className={styles.locBtn} onClick={handleMyLocation} title="Re-center">

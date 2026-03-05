@@ -57,8 +57,11 @@ export default function DashboardPage() {
     const timeline = allTimelineData[phase] || allTimelineData[PHASES.TERMINAL]
     const sug = suggestions[phase] || suggestions[PHASES.TERMINAL]
     const tripData = getTripData()
-    const children = tripData?.children || [{ name: 'Your Child' }, { name: 'Explorer' }]
-    const familyName = `${children[0].name}'s Family Hub`
+    const travellers = tripData?.travellers || [
+        { name: 'Sarah', type: 'Adult' },
+        { name: 'Leo', type: 'Child' }
+    ]
+    const familyName = `${travellers[0].name.split(' ')[0]}'s Family Hub`
     const flightNum = tripData?.flightNumber || 'EK 501'
     const boardingTime = tripData?.boardingTime || '16:00'
 
@@ -70,9 +73,12 @@ export default function DashboardPage() {
                     <div className={styles.demoPillLabel}>Demo Controls</div>
                     <button onClick={() => setSentiment(0.4)}>Simulate Stress</button>
                     <button
-                        onClick={() => { setSentiment(1.0); setPhase(PHASES.PRE_FLIGHT) }}
+                        onClick={() => {
+                            localStorage.removeItem('familyTripData');
+                            window.location.href = '/setup';
+                        }}
                         style={{ color: 'var(--mint)' }}
-                    >Reset All</button>
+                    >Full Reset</button>
                 </div>
 
                 {/* Phase Switcher */}
@@ -111,7 +117,7 @@ export default function DashboardPage() {
                             className={styles.sentimentAlert}
                         >
                             <AlertCircle size={18} />
-                            Stress level elevated for {children.map(c => c.name).join(' & ')}. Suggesting immediate Calm Mode or the nearest Quiet Zone.
+                            Stress level elevated for {travellers.map(t => t.name.split(' ')[0]).join(' & ')}. Suggesting immediate Calm Mode or the nearest Quiet Zone.
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -169,7 +175,7 @@ export default function DashboardPage() {
                                 <span style={{ fontSize: 10, color: 'var(--text-muted)', fontStyle: 'italic' }}>Click to toggle</span>
                             </div>
                             <div className={styles.memberMoods}>
-                                {children.slice(0, 2).map((child, i) => {
+                                {travellers.slice(0, 2).map((member, i) => {
                                     const moods = [
                                         { happy: 'Happy 😊', sad: 'Restless 🌪️', levelH: 90, levelS: 30, colorH: 'var(--mint)', colorS: 'var(--urgent)' },
                                         { happy: 'Calm 🌸', sad: 'Tired 😴', levelH: 75, levelS: 45, colorH: 'var(--iris)', colorS: 'var(--urgent)' }
@@ -184,7 +190,7 @@ export default function DashboardPage() {
                                             onClick={() => setSentiment(sentiment < 0.5 ? 1.0 : 0.4)}
                                         >
                                             <div className={styles.memberMeta}>
-                                                <strong>{child.name}</strong>
+                                                <strong>{member.name.split(' ')[0]}</strong>
                                                 <span style={{ color: isStressed ? moods.colorS : moods.colorH, fontSize: 13 }}>
                                                     {isStressed ? moods.sad : moods.happy}
                                                 </span>
@@ -233,7 +239,7 @@ export default function DashboardPage() {
                                 {sentiment < 0.5 ? 'Urgent Action' : 'Next Move'}
                             </div>
                             <h3>{sentiment < 0.5 ? 'Activate Calm Mode' : sug.title}</h3>
-                            <p>{sentiment < 0.5 ? `Sentiment analysis indicates tension for ${children[0].name}. Open Calm Mode for 2 minutes of guided breathing.` : sug.desc}</p>
+                            <p>{sentiment < 0.5 ? `Sentiment analysis indicates tension for ${travellers[0].name.split(' ')[0]}. Open Calm Mode for 2 minutes of guided breathing.` : sug.desc}</p>
                             <Link
                                 to="/activities"
                                 className={`btn ${sentiment < 0.5 ? 'btn-urgent' : 'btn-primary'}`}

@@ -1511,3 +1511,310 @@
     width: 100%;
     justify-content: center;
 }
+
+/* 
+   REALISTIC BOARDING PASS
+ */
+.boardingPassRealistic {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    font-family: 'Inter', sans-serif;
+    color: #000;
+}
+
+.bpRedHeader {
+    background: #ef4444;
+    /* Realistic red */
+    color: #fff;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bpHeaderAirlines {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    font-size: 14px;
+}
+
+.bpHeaderTitle,
+.bpHeaderStubTitle {
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+}
+
+.bpBody {
+    display: flex;
+    min-height: 350px;
+}
+
+.bpMain {
+    flex: 1;
+    padding: 24px;
+    position: relative;
+}
+
+.bpRouteRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.bpPoint {
+    display: flex;
+    flex-direction: column;
+}
+
+.bpLabel {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.bpBigCode {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.bpRouteIcon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #000;
+    flex: 1;
+    justify-content: center;
+}
+
+.bpDashedLine {
+    flex: 1;
+    height: 1px;
+    border-top: 2px dashed #ccc;
+    max-width: 80px;
+}
+
+.bpInfoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.bpInfoGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.bpInfoValue {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.bpFooterNote {
+    font-size: 10px;
+    font-weight: 700;
+    color: #000;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.bpSideBarcode {
+    position: absolute;
+    left: -140px;
+    top: 50%;
+    transform: rotate(-90deg) translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.bpSideBarcode span {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #666;
+}
+
+.bpVerticalBars {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+}
+
+.bpVerticalBars div {
+    width: 2px;
+    background: #000;
+}
+
+/* Perforation */
+.bpPerforationVertical {
+    width: 1px;
+    border-left: 2px dashed #ccc;
+    margin: 10px 0;
+    position: relative;
+}
+
+.bpStub {
+    width: 250px;
+    padding: 24px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bpStubGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.bpStubBarcode {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.bpHorizontalBars {
+    display: flex;
+    gap: 2px;
+    width: 100%;
+    justify-content: center;
+}
+
+.bpHorizontalBars div {
+    height: 30px;
+    width: 2px;
+    background: #000;
+}
+
+.bpStubBarcode span {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #666;
+}
+
+/* Passenger management */
+.btnRemove {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.btnRemove:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+@media (max-width: 900px) {
+    .bpBody {
+        flex-direction: column;
+    }
+
+    .bpStub {
+        width: 100%;
+        border-top: 2px dashed #ccc;
+    }
+
+    .bpPerforationVertical {
+        display: none;
+    }
+
+    .bpSideBarcode {
+        display: none;
+    }
+}
+
+/* Stepper Interactivity */
+.stepItem:hover {
+    transform: translateY(-1px);
+}
+
+.stepItem:hover .stepLabel {
+    color: #fff !important;
+}
+
+.stepItem:hover .stepBubble {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.editLink:hover {
+    color: var(--sky) !important;
+    text-decoration: underline;
+}
+
+/* ── Summary Step Extensions ───────────────────────────────── */
+.paxSummaryContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.paxSummaryMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.editLink {
+    background: none;
+    border: none;
+    color: var(--sky);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.editLink:hover {
+    color: var(--mint);
+    text-decoration: underline;
+    opacity: 0.8;
+}
+.youBadgeMini {
+    font-size: 9px;
+    font-weight: 800;
+    background: rgba(56,189,248,0.2);
+    color: var(--sky);
+    border: 1px solid rgba(56,189,248,0.4);
+    padding: 0px 5px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
