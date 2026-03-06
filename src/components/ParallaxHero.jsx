@@ -125,9 +125,14 @@ export default function ParallaxHero() {
 
                                 {/* CTA Buttons */}
                                 <div className={styles.ctaRow}>
-                                    <Link to="/plan-trip" className={styles.btnPillPrimary}>
-                                        Start Your Journey
-                                    </Link>
+                                    <div className={styles.ctaGroup}>
+                                        <Link to="/plan-trip" className={styles.btnPillPrimary}>
+                                            Start Your Journey
+                                        </Link>
+                                        <p className={styles.microCopy}>
+                                            You'll begin by setting up your family profile and flight details.
+                                        </p>
+                                    </div>
                                     <button
                                         className={styles.btnPillSecondary}
                                         onClick={handleTryDemo}
