@@ -38,7 +38,8 @@ const menuItems = [
     { label: 'Airport Map', sub: 'Adaptive Route', link: '/map' },
     { label: 'Security Prep', sub: 'Family Fast-Track', link: '/security' },
     { label: 'Packing List', sub: 'Luggage Sync', link: '/packing' },
-    { label: 'Activities', sub: 'Boredom Killers', link: '/activities' }
+    { label: 'Activities', sub: 'Boredom Killers', link: '/activities' },
+    { label: 'FAQ', sub: 'Common Questions', link: '/#faq' }
 ]
 
 const socialItems = [

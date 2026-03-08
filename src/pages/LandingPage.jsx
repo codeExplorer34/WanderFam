@@ -5,6 +5,7 @@ import { ArrowRight, Plane, Map, Gamepad2, ShieldCheck, ChevronRight, Star, Zap,
 import PageWrapper from '../components/PageWrapper'
 import ParallaxHero from '../components/ParallaxHero'
 import CinematicJourney from '../components/CinematicJourney'
+import FAQSection from '../components/FAQSection'
 import { useDemoMode } from '../App'
 import styles from './LandingPage.module.css'
 
@@ -116,6 +117,9 @@ export default function LandingPage() {
 
             {/* ── Cinematic "How It Works" ────────────────────────────────────── */}
             <CinematicJourney />
+
+            {/* ── FAQ Section ────────────────────────────────────── */}
+            <FAQSection />
 
             {/* CTA Footer */}
             <section className={`section ${styles.ctaSection}`}>

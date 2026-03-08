@@ -11,6 +11,7 @@ const navLinks = [
     { to: '/security', label: 'Security Prep', sub: 'Family Fast-Track' },
     { to: '/packing', label: 'Packing List', sub: 'Luggage Sync' },
     { to: '/activities', label: 'Activities', sub: 'Boredom Killers' },
+    { to: '/#faq', label: 'FAQ', sub: 'Helpful Tips' },
 ]
 
 export default function Navbar() {
