@@ -34,9 +34,9 @@ const allTimelineData = {
 }
 
 const suggestions = {
-    [PHASES.PRE_FLIGHT]: { title: 'Security Prep', desc: 'Review the 5-step family security guide now to save time later.' },
-    [PHASES.TERMINAL]: { title: 'Kids Activity Pack', desc: 'Suggested now to keep kids calm during the gate wait.' },
-    [PHASES.IN_FLIGHT]: { title: 'Calm Mode', desc: 'Perfect time for a guided breathing session before descent.' }
+    [PHASES.PRE_FLIGHT]: { title: 'Security Prep', desc: 'Review the 5-step family security guide now to save time later.', to: '/security' },
+    [PHASES.TERMINAL]: { title: 'Kids Activity Pack', desc: 'Suggested now to keep kids calm during the gate wait.', to: '/activities' },
+    [PHASES.IN_FLIGHT]: { title: 'Calm Mode', desc: 'Perfect time for a guided breathing session before descent.', to: '/activities' }
 }
 
 function getTripData() {
@@ -241,7 +241,7 @@ export default function DashboardPage() {
                             <h3>{sentiment < 0.5 ? 'Activate Calm Mode' : sug.title}</h3>
                             <p>{sentiment < 0.5 ? `Sentiment analysis indicates tension for ${travellers[0].name.split(' ')[0]}. Open Calm Mode for 2 minutes of guided breathing.` : sug.desc}</p>
                             <Link
-                                to="/activities"
+                                to={sentiment < 0.5 ? "/activities" : sug.to}
                                 className={`btn ${sentiment < 0.5 ? 'btn-urgent' : 'btn-primary'}`}
                                 style={{ marginTop: 16, display: 'inline-flex', width: 'auto' }}
                             >
